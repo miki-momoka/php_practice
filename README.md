@@ -6,4 +6,4 @@ Laravelで構築しました。
 
 
 # form URL
-http://localhost/form/
+http://localhost/form/input
