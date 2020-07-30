@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// 入力画面
+Route::get('/form/input' , 'FormController@input');
+
+// 確認画面
+Route::get('/form/confirm' , 'FormController@getConfirm');
+Route::post('/form/confirm' , 'FormController@postConfirm');
+
+// 完了画面
+Route::post('/form/complete' , 'FormController@complete');
