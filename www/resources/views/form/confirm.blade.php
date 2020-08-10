@@ -59,9 +59,11 @@
 					<input type="hidden" name="tel[2]" value="{{$input->tel[2]}}">
 					<input type="hidden" name="tel[3]" value="{{$input->tel[3]}}">
 					<input type="hidden" name="q1" value="{{$input->q1}}">
+					<input type="hidden" name="q1" value="{{$input->q1_other}}">
 					@foreach ($input->q2 as $q2)
 						<input type="hidden" name="q2[]" value="{{$q2}}">
 					@endforeach
+					<input type="hidden" name="q1" value="{{$input->q2_other}}">
 					<input type="hidden" name="q3" value="{{$input->q3}}">
 					<input type="hidden" name="check_policy" value="{{$input->check_policy}}">
 
@@ -105,12 +107,12 @@
 						<div class="formQuestionnaire">
 							<dl class="formQuestionnaireBox">
 								<dt><b>あなたは、このキャンペーンをどこでお知りになりましたか</b></dt>
-								<dd>・{{$master['q1'][$input->q1]}}</dd>
+								<dd>・{{$master['q1'][$input->q1]}} @if($input->q1 == 6) ({{$input->q1_other}}) @endif</dd>
 							</dl>
 							<dl class="formQuestionnaireBox">
 								<dt><b>この商品を購入した理由をお教えください（当てはまるものを全てお選びください）</b></dt>
 								@foreach ($input->q2 as $q2)
-									<dd>・{{$master['q2'][$q2]}}</dd>
+									<dd>・{{$master['q2'][$q2]}} @if($q2 == 7) ({{$input->q2_other}}) @endif</dd>
 								@endforeach
 							</dl>
 							<dl class="formQuestionnaireBox">

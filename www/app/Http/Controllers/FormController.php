@@ -50,6 +50,7 @@ class FormController extends Controller
         $master['q1'][3] = "ホームページで";
         $master['q1'][4] = "ブログやSNS、ネットニュースなどの記事で";
         $master['q1'][5] = "家族・友人からの紹介";
+        $master['q1'][6] = "その他";
         $master['q2'][1] = "キャンペーン中のマグカップが欲しかったから";
         $master['q2'][2] = "アーモンドの健康・美容効果に期待して";
         $master['q2'][3] = "味が好きだから";

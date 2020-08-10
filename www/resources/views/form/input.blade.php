@@ -192,7 +192,7 @@
 								<dt>
 									<b>あなたは、このキャンペーンをどこでお知りになりましたか</b>
 								</dt>
-								<dd @if ($errors->has('q1')) class="error" @endif>
+								<dd @if ($errors->has('q1') || $errors->has('q1_other')) class="error" @endif>
 									<ul class="formList formList02">
 										@foreach($master['q1'] as $key => $q1)
 											<li>
@@ -203,9 +203,15 @@
 											</li>
 										@endforeach
 									</ul>
+									<div class="formInputOther">
+										<input name="q1_other" type="text" value={{old('q1_other')}}>
+									</div>
 									<span>
 										@if ($errors->has('q1'))
 											<b class="errorTxt">{{$errors->first('q1')}}</b>
+										@endif
+										@if ($errors->has('q1_other'))
+											<b class="errorTxt">{{$errors->first('q1_other')}}</b>
 										@endif
 									</span>
 								</dd>
@@ -214,7 +220,7 @@
 								<dt>
 									<b>この商品を購入した理由をお教えください（当てはまるものを全てお選びください）</b>
 								</dt>
-								<dd @if ($errors->has('q2')) class="error" @endif>
+								<dd @if ($errors->has('q2') || $errors->has('q2_other')) class="error" @endif>
 									<ul class="formList formList02">
 										@foreach($master['q2'] as $key => $q2)
 											<li>
@@ -225,9 +231,15 @@
 											</li>
 										@endforeach
 									</ul>
+									<div class="formInputOther">
+										<input name="q2_other" type="text" value={{old('q2_other')}}>
+									</div>
 									<span>
 										@if ($errors->has('q2'))
 											<b class="errorTxt">{{$errors->first('q2')}}</b>
+										@endif
+										@if ($errors->has('q2_other'))
+											<b class="errorTxt">{{$errors->first('q2_other')}}</b>
 										@endif
 									</span>
 								</dd>

@@ -41,7 +41,7 @@ class MailformRequest extends FormRequest
             'building' => 'sometimes|max:90',
             'email' => 'required|email',
             'tel' => '|tel',
-            'q1' => 'required|integer|between:1,5',
+            'q1' => 'required|integer|between:1,6',
             'q2' => 'required|q2',
             'q3' => 'required|max:400',
             'check_policy' => 'required'
@@ -78,11 +78,62 @@ class MailformRequest extends FormRequest
             'q1.required' => '選択してください。',
             'q1.integer' => '正しく選択してください。',
             'q1.between' => '正しく選択してください。',
+            'q1_other.required' => 'その他を選択した場合は、「その他」を入力してください。',
+            'q1_other.max' => '「その他」は100文字以内で入力してください。',
             'q2.required' => '選択してください。',
             'q2.q2' => '正しく選択してください。',
+            'q2_other.required' => 'その他を選択した場合は、「その他」を入力してください。',
+            'q2_other.max' => '「その他」は100文字以内で入力してください。',
             'q3.required' => '入力してください。',
             'q3.max' => '400文字以内で入力してください。',
             'check_policy.required' => '選択してください。',
         ];
+    }
+
+    // バリデーション前に実行
+    public function prepareForValidation()
+    {   
+        // 半角カナ・全角ひらがなを全角カナに変換
+        $this->merge(['kana_sei' => mb_convert_kana($this->kana_sei, 'KVC')]);
+        $this->merge(['kana_mei' => mb_convert_kana($this->kana_mei, 'KVC')]);
+
+        // 半角カナを全角カナに変換
+        $this->merge(['name_sei' => mb_convert_kana($this->name_sei, 'KV')]);
+        $this->merge(['name_mei' => mb_convert_kana($this->name_mei, 'KV')]);
+        $this->merge(['address' => mb_convert_kana($this->address, 'KV')]);
+        $this->merge(['building' => mb_convert_kana($this->building, 'KV')]);
+        $this->merge(['q1_other' => mb_convert_kana($this->q1_other, 'KV')]);
+        $this->merge(['q2_other' => mb_convert_kana($this->q2_other, 'KV')]);
+        $this->merge(['q3' => mb_convert_kana($this->q3, 'KV')]);
+
+        // 全角数字を半角数字に変換
+        $this->merge([
+            'zip' => [
+                '1' => mb_convert_kana($this->zip[1], 'n'),
+                '2' => mb_convert_kana($this->zip[2], 'n')
+            ],
+            'tel' => [
+                '1' => mb_convert_kana($this->tel[1], 'n'),
+                '2' => mb_convert_kana($this->tel[2], 'n'),
+                '3' => mb_convert_kana($this->tel[3], 'n')
+            ]
+        ]);
+    }
+    
+    public function withValidator($validator)
+    {
+        // 条件を満たす時だけバリデーション実行
+        $validator->sometimes('q1_other', 'required|max:100', function ($input) {
+            return $input->q1 == 6;
+        });
+
+        $validator->sometimes('q2_other', 'required|max:100', function ($input) {
+            if(!empty($input->q2) && is_array($input->q2)){
+                if(in_array(7, $input->q2)){
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 }
