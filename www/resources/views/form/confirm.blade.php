@@ -59,11 +59,11 @@
 					<input type="hidden" name="tel[2]" value="{{$input->tel[2]}}">
 					<input type="hidden" name="tel[3]" value="{{$input->tel[3]}}">
 					<input type="hidden" name="q1" value="{{$input->q1}}">
-					<input type="hidden" name="q1" value="{{$input->q1_other}}">
+					<input type="hidden" name="q1_other" value="{{$input->q1_other}}">
 					@foreach ($input->q2 as $q2)
 						<input type="hidden" name="q2[]" value="{{$q2}}">
 					@endforeach
-					<input type="hidden" name="q1" value="{{$input->q2_other}}">
+					<input type="hidden" name="q2_other" value="{{$input->q2_other}}">
 					<input type="hidden" name="q3" value="{{$input->q3}}">
 					<input type="hidden" name="check_policy" value="{{$input->check_policy}}">
 
