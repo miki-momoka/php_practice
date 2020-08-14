@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class Q2TableSeeder extends Seeder
+class Quest2sTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,7 @@ class Q2TableSeeder extends Seeder
         ];
         
         foreach ($params as $param) {
-            DB::table('q2')->insert($param);
+            DB::table('quest2s')->insert($param);
         }
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class PrefectureTableSeeder extends Seeder
+class PrefecturesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +11,6 @@ class PrefectureTableSeeder extends Seeder
      */
     public function run()
     {
-        //
         $params = [
             [ 'label' => '北海道'],
             [ 'label' => '青森県'], 
@@ -64,7 +62,7 @@ class PrefectureTableSeeder extends Seeder
         ];
 
         foreach ($params as $param) {
-            DB::table('prefecture')->insert($param);
+            DB::table('prefectures')->insert($param);
         }
     }
 }

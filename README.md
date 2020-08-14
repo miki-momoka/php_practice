@@ -16,10 +16,11 @@ http://localhost/form/input
 
 ### DB/テーブル作成
 
-■マイグレーション
+■ マイグレーション
 コンテナに入り、www直下(artisanがある場所)へ移動してからマイグレーション実行
+(テーブル名は複数形にする。)
 
->$ php artisan make:migration create_form_table 
+>$ php artisan make:migration create_forms_table 
 
 >$ docker exec -it mailform_laravel_app_1 bash  
 
@@ -27,13 +28,17 @@ http://localhost/form/input
 
 ### DBでマスター管理
 
-■シーダー作成・実行
-> php artisan make:seeder PrefectureTableSeeder
+■ シーダー作成・実行
+> php artisan make:seeder PrefecturesTableSeeder
 
 database/seeds/DatabaseSeeder.php 内 ↓
-> $this->call(PrefectureTableSeeder::class);
+> $this->call(PrefecturesTableSeeder::class);
 
 > php artisan db:seed
+
+■ マスターをDB管理に変更
+テーブルを操作するモデルを作成
+> php artisan make:model Prefectures
 
 ### フォーム登録
 

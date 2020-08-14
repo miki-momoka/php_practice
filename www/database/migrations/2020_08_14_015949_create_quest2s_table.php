@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQ1Table extends Migration
+class CreateQuest2sTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateQ1Table extends Migration
      */
     public function up()
     {
-        Schema::create('q1', function (Blueprint $table) {
+        Schema::create('quest2s', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label');        
+            $table->string('label');     
         });
     }
 
@@ -26,6 +26,6 @@ class CreateQ1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('q1');
+        Schema::dropIfExists('quest2s');
     }
 }
