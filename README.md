@@ -40,10 +40,30 @@ database/seeds/DatabaseSeeder.php 内 ↓
 テーブルを操作するモデルを作成
 > php artisan make:model Prefectures
 
+コントローラ内
+> use App\Prefecture;
+
+> $master_pref = Prefecture::all()->toArray();
+
 ### フォーム登録
+
 
 
 ### メール送信
 
 
 ### vue
+
+
+## めも
+・httaccess
+
+・env
+
+・blade
+
+キー名は value.key で指定可能。
+
+連想配列名は指定できない。
+
+>DB_HOST=127.0.0.1
