@@ -69,6 +69,9 @@ class FormController extends Controller
 
         $form->save();
 
+        // 二重送信対策
+        $request->session()->regenerateToken();
+
         return view('form.complete');
     }
 

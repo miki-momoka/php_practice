@@ -9,12 +9,12 @@ http://localhost/form/input
 
 ## 夏季休暇 
 
-### 前回で学んだ部分を追加
+### 1. 前回で学んだ部分を追加
 
 ✔︎ その他選択時のバリデーション追加
 ✔︎ バリデーション前の文字整形
 
-### DB/テーブル作成
+### 2. DB/テーブル作成
 
 ■ マイグレーション
 コンテナに入り、www直下(artisanがある場所)へ移動してからマイグレーション実行
@@ -26,7 +26,7 @@ http://localhost/form/input
 
 >$ php artisan migrate
 
-### DBでマスター管理
+### 3. DBでマスター管理
 
 ■ シーダー作成・実行
 > php artisan make:seeder PrefecturesTableSeeder
@@ -45,7 +45,7 @@ database/seeds/DatabaseSeeder.php 内 ↓
 
 > $master_pref = Prefecture::all()->toArray();
 
-### フォーム登録
+### 4. フォーム登録
 
 1) Formモデル作成
 
@@ -55,21 +55,19 @@ database/seeds/DatabaseSeeder.php 内 ↓
 
 4) モデルの save メソッドを使用すると、created_at と updated_at が自動に入ってくれる。
 
+■ 二重送信
+
+## 追加機能
+
 ### メール送信
 
 
 ### vue
 
 
-## めも
-・httaccess
+## MEMO
+・httaccess と env を作成するのを忘れずに。
 
-・env
+・blade  キー名は value.key で指定可能。 連想配列名は指定できない。
 
-・blade
-
-キー名は value.key で指定可能。
-
-連想配列名は指定できない。
-
->DB_HOST=127.0.0.1
+・DB_HOST は mysql(Dockerのサービス名) を指定し、コマンド類はコンテナ内で行う。
