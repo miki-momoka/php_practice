@@ -87,6 +87,7 @@
 								<th><b>住所</b></th>
 								<td>
 									〒{{$input->zip[1]}}-{{$input->zip[2]}}<br>
+									{{$master['pref'][$input->prefecture]}}<br>
 									{{$input->address}}<br>
 									{{$input->building}}
 								</td>

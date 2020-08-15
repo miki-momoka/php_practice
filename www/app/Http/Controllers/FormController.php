@@ -8,6 +8,7 @@ use App\Http\Requests\MailformRequest;
 use App\Prefecture;
 use App\Quest1;
 use App\Quest2;
+use App\Form;
 
 class FormController extends Controller
 {
@@ -47,6 +48,26 @@ class FormController extends Controller
         if($request->input('backbutton') !== null){
             return redirect()->action('FormController@input')->withInput();
         }
+        $master = $this->master();
+
+        $form = new Form();
+        $form->name = $request->name_sei.' '.$request->name_mei;
+        $form->kana = $request->kana_sei.' '.$request->kana_mei;
+        $form->address = $request->zip[1].'-'.$request->zip[2].' '.$master['pref'][$request->prefecture].' '.$request->address.' '.$request->building;
+        $form->email = $request->email;
+        $form->tel = $request->tel[1].$request->tel[2].$request->tel[3];
+        $form->q1 = $request->q1;
+        $form->q1_other = $request->q1_other;
+        $q2 = '';
+        foreach($request->q2 as $v){
+            $q2 .= $v . ',';
+        }
+        $q2 = rtrim($q2,',');
+        $form->q2 = $q2;
+        $form->q2_other = $request->q2_other;
+        $form->q3 = $request->q3;
+
+        $form->save();
 
         return view('form.complete');
     }

@@ -47,7 +47,13 @@ database/seeds/DatabaseSeeder.php 内 ↓
 
 ### フォーム登録
 
+1) Formモデル作成
 
+2) 新しくインスタンスを作成。
+
+3) $request からフォームの値を取得。
+
+4) モデルの save メソッドを使用すると、created_at と updated_at が自動に入ってくれる。
 
 ### メール送信
 
