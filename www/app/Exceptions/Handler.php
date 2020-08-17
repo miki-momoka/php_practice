@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use Illuminate\Session\TokenMismatchException; // add
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -44,8 +46,14 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
+
+    // CSRFトークンの有効期限切れ
     public function render($request, Exception $exception)
     {
+        // 「the page has expired due to inactivity. please refresh and try again」を表示させない
+        if ($exception instanceof TokenMismatchException) {
+            return redirect('/form/input')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+        }
         return parent::render($request, $exception);
     }
 }

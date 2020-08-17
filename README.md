@@ -22,7 +22,7 @@ http://localhost/form/input
 
 >$ php artisan make:migration create_forms_table 
 
->$ docker exec -it mailform_laravel_app_1 bash  
+>$ docker exec -it php_practice_app_1 bash  
 
 >$ php artisan migrate
 
@@ -57,6 +57,13 @@ database/seeds/DatabaseSeeder.php 内 ↓
 
 ■ 二重送信
 
+送信完了後に
+> $request->session()->regenerateToken();
+
+419エラーページが表示される。 
+
+リダイレクト処理したい場合は、\app\Exceptions\Handler.php のrender内に追記 
+
 ## 追加機能
 
 ### メール送信
@@ -71,3 +78,13 @@ database/seeds/DatabaseSeeder.php 内 ↓
 ・blade  キー名は value.key で指定可能。 連想配列名は指定できない。
 
 ・DB_HOST は mysql(Dockerのサービス名) を指定し、コマンド類はコンテナ内で行う。
+
+・「クラスが存在しない」等のエラーが出た場合は、 composer dump-autoload を打ち、クラスを呼び出せるようにする。
+
+・テーブル構造の変更
+
+デフォルトでは変更を行うことができないため、下記を打ち追加。
+> composer require doctrine/dbal
+
+> php artisan make:migration change_forms_table --table forms
+
