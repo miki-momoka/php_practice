@@ -11,12 +11,28 @@
 |
 */
 
-// 入力画面
-Route::get('/form/input' , 'FormController@input');
 
-// 確認画面
-Route::get('/form/confirm' , 'FormController@getConfirm');
-Route::post('/form/confirm' , 'FormController@postConfirm');
 
-// 完了画面
-Route::post('/form/complete' , 'FormController@complete');
+
+
+// api
+Route::get('/api/master', 'FormController@apiMaster');
+
+
+// APIのURL以外のリクエストに対してはindexテンプレートを返す
+// 画面遷移はフロントエンドのVueRouterが制御する
+Route::get('/{any}', function () {
+	return view('form/index');
+})->where('any', '.*');
+
+
+// // 入力画面
+// Route::get('/form/input' , 'FormController@input');
+
+// // 確認画面
+// Route::get('/form/confirm' , 'FormController@getConfirm');
+// Route::post('/form/confirm' , 'FormController@postConfirm');
+// Route::post('/form/confirm' , 'FormController@postConfirm');
+
+// // 完了画面
+// Route::post('/form/complete' , 'FormController@complete');

@@ -20,6 +20,11 @@ class FormController extends Controller
         // q1,q2,pref マスターデータ
         $master = $this->master();
 
+
+
+
+        
+
         // print "<pre>";
         // print_r($master);die();
 
@@ -75,7 +80,8 @@ class FormController extends Controller
         return view('form.complete');
     }
 
-    function master(){
+    // マスター取得APi
+    public function apiMaster(){
         $master_pref = Prefecture::all()->toArray();
         $master_q1 = Quest1::all()->toArray();
         $master_q2 = Quest2::all()->toArray();
@@ -90,26 +96,44 @@ class FormController extends Controller
         foreach($master_q2 as $m){
             $master['q2'][$m['id']] = $m['label'];
         }
-
-        // $master['pref'] = $master_pref;
-        // $master['q1'] = $master_q1;
-        // $master['q2'] = $master_q2;
-
-
-        // $master['q1'][1] = "店頭装飾を見つけて";
-        // $master['q1'][2] = "商品についている、シールを見て";
-        // $master['q1'][3] = "ホームページで";
-        // $master['q1'][4] = "ブログやSNS、ネットニュースなどの記事で";
-        // $master['q1'][5] = "家族・友人からの紹介";
-        // $master['q1'][6] = "その他";
-        // $master['q2'][1] = "キャンペーン中のマグカップが欲しかったから";
-        // $master['q2'][2] = "アーモンドの健康・美容効果に期待して";
-        // $master['q2'][3] = "味が好きだから";
-        // $master['q2'][4] = "スーパーや街中での試飲会をしていたから";
-        // $master['q2'][5] = "特売していたから";
-        // $master['q2'][6] = "知人や家族にすすめられたから";
-        // $master['q2'][7] = "その他";
-        // $master['pref'] = config('pref');
         return $master;
     }
+
+    // function master(){
+    //     $master_pref = Prefecture::all()->toArray();
+    //     $master_q1 = Quest1::all()->toArray();
+    //     $master_q2 = Quest2::all()->toArray();
+
+    //     $master = [];
+    //     foreach($master_pref as $m){
+    //         $master['pref'][$m['id']] = $m['label'];
+    //     }
+    //     foreach($master_q1 as $m){
+    //         $master['q1'][$m['id']] = $m['label'];
+    //     }
+    //     foreach($master_q2 as $m){
+    //         $master['q2'][$m['id']] = $m['label'];
+    //     }
+
+    //     // $master['pref'] = $master_pref;
+    //     // $master['q1'] = $master_q1;
+    //     // $master['q2'] = $master_q2;
+
+
+    //     // $master['q1'][1] = "店頭装飾を見つけて";
+    //     // $master['q1'][2] = "商品についている、シールを見て";
+    //     // $master['q1'][3] = "ホームページで";
+    //     // $master['q1'][4] = "ブログやSNS、ネットニュースなどの記事で";
+    //     // $master['q1'][5] = "家族・友人からの紹介";
+    //     // $master['q1'][6] = "その他";
+    //     // $master['q2'][1] = "キャンペーン中のマグカップが欲しかったから";
+    //     // $master['q2'][2] = "アーモンドの健康・美容効果に期待して";
+    //     // $master['q2'][3] = "味が好きだから";
+    //     // $master['q2'][4] = "スーパーや街中での試飲会をしていたから";
+    //     // $master['q2'][5] = "特売していたから";
+    //     // $master['q2'][6] = "知人や家族にすすめられたから";
+    //     // $master['q2'][7] = "その他";
+    //     // $master['pref'] = config('pref');
+    //     return $master;
+    // }
 }
