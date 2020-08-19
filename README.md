@@ -20,28 +20,40 @@ Laravelで構築しました。<br>
 コンテナに入り、www直下(artisanがある場所)へ移動してからマイグレーション実行
 (テーブル名は複数形にする。)
 
->$ php artisan make:migration create_forms_table<br>
->$ docker exec -it php_practice_app_1 bash<br>
->$ php artisan migrate
+```
+$ php artisan make:migration create_forms_table<br>
+$ docker exec -it php_practice_app_1 bash<br>
+$ php artisan migrate
+```
 
 <br>
 
 #### ②-1 DBでマスター管理
 
 ■ シーダー作成・実行
-> php artisan make:seeder PrefecturesTableSeeder<br>
-> php artisan db:seed
 
-> 【database/seeds/DatabaseSeeder.php 内 ↓】<br>
-> $this->call(PrefecturesTableSeeder::class);<br>
+```
+$ php artisan make:seeder PrefecturesTableSeeder<br>
+$ php artisan db:seed
+```
+
+ 【database/seeds/DatabaseSeeder.php 内 ↓】<br>
+```
+$this->call(PrefecturesTableSeeder::class);<br>
+```
 
 ■ マスターをDB管理に変更<br>
 テーブルを操作するモデルを作成
-> php artisan make:model Prefectures
+```
+$ php artisan make:model Prefectures
+```
 
 コントローラ内
-> use App\Prefecture;<br>
-> $master_pref = Prefecture::all()->toArray();
+
+```
+use App\Prefecture;<br>
+$master_pref = Prefecture::all()->toArray();
+```
 
 <br>
 
@@ -55,7 +67,9 @@ Laravelで構築しました。<br>
 ■ 二重送信
 
 送信完了後に
-> $request->session()->regenerateToken();
+```
+$request->session()->regenerateToken();
+```
 
 419エラーページが表示される。 <br>
 リダイレクト処理したい場合は、\app\Exceptions\Handler.php のrender内に追記 
@@ -64,18 +78,26 @@ Laravelで構築しました。<br>
 
 ### ③ vue導入
 - インストール
-> npm install
+```
+$ npm install
+```
 
 - ビルドコマンド
-> npm run dev
+```
+$ npm run dev
+```
 
 - コンパイル コマンド
-> npm run prod
+```
+$ npm run prod
+```
 
 コマンドを実行すると、public内のcss,jsフォルダ内にコンパイルされたファイルが生成される。
 
 - ファイルを監視しコンパイル自動化
-> npm run watch
+```
+$ npm run watch
+```
 
 - デバッグツール Vue.js DevTools<br>
 https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja
@@ -86,7 +108,9 @@ https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanh
 	- シングル：最初に画面を表示し、その後はAjaxでデータの要求や送信がされる。
 
 - Vue Router導入
-> npm install -D vue-router
+```
+$ npm install -D vue-router
+```
 
 <br>
 
@@ -100,15 +124,20 @@ https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanh
 	- "/api/regist" ・・・　　フォーム登録処理
 
 - ルートコンポーネント・・・コンポーネントツリーの頂上に位置するコンポーネント
-> resources/js/App.vue
+```
+resources/js/App.vue
+```
 
 - ページコンポーネント・・・切り替わるHTML部分
-> resources/js/pages/input.vue
-> resources/js/pages/confirm.vue
+```
+resources/js/pages/input.vue
+resources/js/pages/confirm.vue
+```
 
 - ルーティングの定義
-> resources/js/router.js
-
+```
+resources/js/router.js
+```
 => app.jsに、ルートコンポーネントとルーティング定義をインポート
 
 - web.php内で、api以外のURLは、view内のform/indexを表示するようにしており、<br>
@@ -134,8 +163,12 @@ axiosは、promiseベースで組まれているため、<br>
 - 「クラスが存在しない」等のエラーが出た場合は、 composer dump-autoload を打ち、クラスを呼び出せるようにする。
 - テーブル構造の変更
 - デフォルトでは変更を行うことができないため、下記を打ち追加。
-> composer require doctrine/dbal<br>
-> php artisan make:migration change_forms_table --table forms
+```
+$ composer require doctrine/dbal<br>
+$ php artisan make:migration change_forms_table --table forms
+```
 - jsファイル読み込みで「defer」を付けると、html読み込みが完了した後に実行されるようになる。
 - apiのミドルウェアグループには、セッションやクッキー、CSRF トークンを扱うミドルウェアが含まれていない。
-> app/Providers/RouteServiceProvider.php 
+```
+app/Providers/RouteServiceProvider.php
+```
