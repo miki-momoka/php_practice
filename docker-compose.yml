@@ -9,6 +9,7 @@ services:
     volumes:
       - "./www/:/var/www"
       - "./docker/app/httpd.conf:/etc/httpd/conf/httpd.conf"
+    stdin_open: true
     depends_on:
       - mysql
   mysql:
