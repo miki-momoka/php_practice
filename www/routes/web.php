@@ -25,6 +25,14 @@ Route::get('/{any}', function () {
 	return view('form/index');
 })->where('any', '.*');
 
+// Route::get('/', function () {
+// 	return view('form/index');
+// });
+
+// Route::get('/confirm', function () {
+// 	return view('form/index');
+// });
+
 
 // // 入力画面
 // Route::get('/form/input' , 'FormController@input');

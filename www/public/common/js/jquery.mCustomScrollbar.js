@@ -2397,7 +2397,8 @@ and dependencies (minified).
 	*/
 	window[pluginNS]=true;
 	
-	$(window).load(function(){
+	$.fn.load = function(){
+	// $(window).load(function(){
 		
 		$(defaultSelector)[pluginNS](); /* add scrollbars automatically on default selector */
 		
@@ -2420,6 +2421,6 @@ and dependencies (minified).
 			}
 		});
 	
-	});
+	};
 
 }))}));

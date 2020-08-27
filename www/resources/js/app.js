@@ -1,37 +1,18 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
-require('./bootstrap');
+// require('./bootstrap');
+
+import jquery from 'jquery'
+global.jquery = jquery
+global.$ = jquery
+window.$ = window.jQuery = require('jquery')
 
 window.Vue = require('vue');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+// headの設定・切り替え
+import VueHead from 'vue-head';
+Vue.use(VueHead);
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-const app = new Vue({
-    el: '#app',
-});
-
-import Vue from 'vue'
 
 // ルーティングの定義をインポートする
 // router.js
@@ -39,11 +20,42 @@ import router from './router'
 
 // ルートコンポーネントをインポートする
 // app.vue
-import App from './App.vue'
+import App from './components/App.vue'
+
 
 new Vue({
   el: '#app',
   router, // ルーティングの定義を読み込む
   components: { App }, // ルートコンポーネントの使用を宣言する
-  template: '<App />' // ルートコンポーネントを描画する
+  template: '<App />', // ルートコンポーネントを描画する
+  head: {
+    meta:[
+      { he: 'X-UA-Compatible', c: 'IE=edge'},
+      { he: 'Content-Type' ,c:' text/html; charset=utf-8'},
+      { he: 'Content-Script-Type' ,c: 'text/javascript'},
+      { he: 'Content-Style-Type' ,c: 'text/css'},
+      { he: 'imagetoolbar' ,c: 'no'},
+      { n: 'format-detection' ,c: 'telephone=no'},
+      { n: 'viewport' ,c: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes'},
+      { n: 'Keywords' ,c: ''},
+      { n: 'description' ,c: ''},
+      { n: 'Priority' ,value: '0'},
+      { p: 'og:title' ,c: ''},
+      { p: 'og:type' ,c: 'website'},
+      { p: 'og:url' ,c: ''},
+      { p: 'og:site_name' ,c: ''},
+      { p: 'og:description' ,c: ''},
+      { p: 'og:image' ,c: ''},
+      { n: 'twitter:card' ,c: 'photo'},
+      { n: 'twitter:image' ,c: ''}
+    ],
+    link:[
+      { rel: 'stylesheet' , href: 'common/css/default.css' , media: 'all' },
+      { rel: 'stylesheet' , href: 'common/css/base_pc.css' , media: 'all' },
+      { rel: 'stylesheet' , href: 'common/css/base_sp.css' , media: 'all' },
+    ],
+    script:[
+      { type: 'text/javascript', src: 'common/js/common.js' , body: true},
+    ]
+  }
 })
