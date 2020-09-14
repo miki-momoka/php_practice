@@ -143,12 +143,23 @@ vueファイル下部にscriptタグを作成し、ページごとに切り替�
 <br>
 
 ### ⑤ API実装
-#### ■ Ajax通信は axiosを使用
+#### ■ Ajax通信は axiosを使用 [ resources/js/components/pages/〇〇.vue ]
+- 子コンポーネント内で通信、表示(表示箇所が子コンポーネント内のため？)
 
-- ※ axiosの利点<br>
-axiosは、promiseベースで組まれているため、<br>
-非同期処理の一連の流れをメソッドチェーンの形で書けるようになり、<br>
-ネストされたコールバックのプログラムより読みやすくなる。
+- API接続をどのライフサイクルフックで行うか
+  - created => インスタンスの初期化が済んで props や computed にアクセスできる
+  - mounted => created + DOMにアクセスできる
+
+#### ■ マスターデータをAPIから取得 [ resources/js/components/pages/〇〇.vue ]
+- inputタグを描画
+※v-modelの値は、dataで初期値を設定しておく必要がある。
+
+- 取得して表示できるまでの間はローディング画面を表示させる。
+vueファイル側で v-if で出し分けする。
+
+- フェードイン・アウト
+アニメーションを付与したい箇所をtransitionタグで囲み、出し分けする部分にv-ifでdataを指定
+trueならフェードイン・falseならフェードアウトする。
 
 <br>
 
@@ -173,3 +184,12 @@ app/Providers/RouteServiceProvider.php
 $.fn.load = function(){
 	// 変更前： $(window).load(function(){
 ```
+- 子コンポーネントでは、data属性などを上書きして設定できないので、関数化する必要がある。
+```
+data: function() {
+  return {
+    q1Master: []
+  }
+},
+```
+- axiosなどの関数をメソッド内で使用する時は、axios内thisのスコープの範囲外のため気をつける。

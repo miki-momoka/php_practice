@@ -59,3 +59,16 @@ table { /* markup tables with 'cellspacing="0"' */
 .disnone {
 	display: none;
 }
+
+.v-enter-active, .v-leave-actibe {
+	transition: opacity 1s;
+}
+  
+.v-enter, .v-leave-to {
+	opacity: 0;
+	transition: opacity 1s;
+}
+
+#contentsBox{
+	min-height: 100vh;
+}

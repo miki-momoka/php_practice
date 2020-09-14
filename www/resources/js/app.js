@@ -12,8 +12,6 @@ window.Vue = require('vue');
 import VueHead from 'vue-head';
 Vue.use(VueHead);
 
-
-
 // ルーティングの定義をインポートする
 // router.js
 import router from './router'
@@ -22,8 +20,7 @@ import router from './router'
 // app.vue
 import App from './components/App.vue'
 
-
-new Vue({
+const app = new Vue({
   el: '#app',
   router, // ルーティングの定義を読み込む
   components: { App }, // ルートコンポーネントの使用を宣言する
@@ -57,5 +54,5 @@ new Vue({
     script:[
       { type: 'text/javascript', src: 'common/js/common.js' , body: true},
     ]
-  }
+  },
 })
