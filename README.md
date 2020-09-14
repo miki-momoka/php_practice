@@ -4,21 +4,18 @@
 
 Laravelで構築しました。
 
-<br><br>
+<br>
 
 ### ① DB/テーブル作成
 
 #### ■ マイグレーション [database/migrations] (テーブルの定義)
-コンテナに入り、www直下(artisanがある場所)へ移動してからマイグレーション実行
-(テーブル名は複数形にする。)
+- コンテナに入り、www直下(artisanがある場所)へ移動してからマイグレーション実行(テーブル名は複数形にする。)
 
 ```
 $ php artisan make:migration create_forms_table
 $ docker exec -it php_practice_app_1 bash
 $ php artisan migrate
 ```
-
-<br>
 
 #### ■ シーダー作成・実行 [database/seeds] (テーブルに行データ追加)
 
@@ -33,19 +30,16 @@ $this->call(PrefecturesTableSeeder::class);
 ```
 
 #### ■ モデル作成 [app/]
-テーブルを操作するモデルを作成 [app/] DBと連携する。1テーブルに1モデル。
+- テーブルを操作するモデルを作成 [app/] DBと連携する。1テーブルに1モデル。
 ```
 $ php artisan make:model Prefectures
 ```
 
-コントローラ内
-
+- コントローラ内
 ```
 use App\Prefecture;
 $master_pref = Prefecture::all()->toArray();
 ```
-
-<br>
 
 ### ② フォーム登録
 
@@ -61,10 +55,10 @@ $master_pref = Prefecture::all()->toArray();
 $request->session()->regenerateToken();
 ```
 
-419エラーページが表示される。 <br>
+- 419エラーページが表示される。 <br>
 リダイレクト処理したい場合は、\app\Exceptions\Handler.php のrender内に追記 
 
-<br><br>
+<br>
 
 ### ③ vue導入
 - インストール
@@ -117,19 +111,17 @@ Vue.use(VueRouter);
 - URL一覧
 	- "/"              ・・・  最初の画面。入力画面を表示
   - "/confirm"       ・・・　確認画面
-	- "/api/master"    ・・・  マスター情報を取得 (※)
-	- "/api/validate"  ・・・  サーバ側バリデーション処理 (※)
-	- "/api/regist"    ・・・  フォーム登録処理 (※)
+  - "/api/master"    ・・・  マスター情報を取得 (※)
+  - "/api/validate"  ・・・  サーバ側バリデーション処理 (※)
+  - "/api/regist"    ・・・  フォーム登録処理 (※)
 (※ 未実装)
 
 #### ■ ルートコンポーネント [ resources/js/components/App.vue ]
-コンポーネントツリーの頂上に位置するコンポーネント
-
-<router-view />内に、ルートとマッチしたコンポーネントが表示される。
+- コンポーネントツリーの頂上に位置するコンポーネント
+- <router-view />内に、ルートとマッチしたコンポーネントが表示される。
 
 #### ■ ページコンポーネント [ resources/js/components/pages/〇〇.vue ]
-
-<template>内に、ページによって切り替える内容を記述する。
+- <template>内に、ページによって切り替える内容を記述する。
 
 #### ■ ルーティングの定義 [ resources/js/router.js ]
 - VueRouterインスタンスを作成
@@ -153,12 +145,12 @@ vueファイル下部にscriptタグを作成し、ページごとに切り替�
 ### ⑤ API実装
 #### ■ Ajax通信は axiosを使用
 
-※ axiosの利点<br>
+- ※ axiosの利点<br>
 axiosは、promiseベースで組まれているため、<br>
 非同期処理の一連の流れをメソッドチェーンの形で書けるようになり、<br>
 ネストされたコールバックのプログラムより読みやすくなる。
 
-<br><br>
+<br>
 
 ## MEMO
 - httaccess と env を作成するのを忘れずに。
