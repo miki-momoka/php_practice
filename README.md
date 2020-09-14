@@ -118,10 +118,10 @@ Vue.use(VueRouter);
 
 #### ■ ルートコンポーネント [ resources/js/components/App.vue ]
 - コンポーネントツリーの頂上に位置するコンポーネント
-- <router-view />内に、ルートとマッチしたコンポーネントが表示される。
+- "router-view" 内に、ルートとマッチしたコンポーネントが表示される。
 
 #### ■ ページコンポーネント [ resources/js/components/pages/〇〇.vue ]
-- <template>内に、ページによって切り替える内容を記述する。
+- "template" 内に、ページによって切り替える内容を記述する。
 
 #### ■ ルーティングの定義 [ resources/js/router.js ]
 - VueRouterインスタンスを作成
