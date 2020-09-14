@@ -1,14 +1,11 @@
 # 【課題】メールフォーム　
-
-## ～ 概要 ～
-
-Laravelで構築しました。
+Laravel + Vue.jsで実装
 
 <br>
 
-### ① DB/テーブル作成
+## ① DB/テーブル作成
 
-#### ■ マイグレーション [database/migrations] (テーブルの定義)
+### ■ マイグレーション [database/migrations] (テーブルの定義)
 - コンテナに入り、www直下(artisanがある場所)へ移動してからマイグレーション実行(テーブル名は複数形にする。)
 
 ```
@@ -17,7 +14,7 @@ $ docker exec -it php_practice_app_1 bash
 $ php artisan migrate
 ```
 
-#### ■ シーダー作成・実行 [database/seeds] (テーブルに行データ追加)
+### ■ シーダー作成・実行 [database/seeds] (テーブルに行データ追加)
 
 ```
 $ php artisan make:seeder PrefecturesTableSeeder<br>
@@ -29,7 +26,7 @@ $ php artisan db:seed
 $this->call(PrefecturesTableSeeder::class);
 ```
 
-#### ■ モデル作成 [app/]
+### ■ モデル作成 [app/]
 - テーブルを操作するモデルを作成 [app/] DBと連携する。1テーブルに1モデル。
 ```
 $ php artisan make:model Prefectures
@@ -41,14 +38,14 @@ use App\Prefecture;
 $master_pref = Prefecture::all()->toArray();
 ```
 
-### ② フォーム登録
+## ② フォーム登録
 
 1) Formモデル作成<br>
 2) 新しくインスタンスを作成。<br>
 3) $request からフォームの値を取得。<br>
 4) モデルの save メソッドを使用すると、created_at と updated_at が自動に入ってくれる。
 
-#### ■ 二重送信対策
+### ■ 二重送信対策
 
 送信完了後に
 ```
@@ -60,7 +57,7 @@ $request->session()->regenerateToken();
 
 <br>
 
-### ③ vue導入
+## ③ vue導入
 - インストール
 ```
 $ npm install
@@ -87,13 +84,13 @@ $ npm run watch
 https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja
 
 
-#### ※ マルチページアプリケーション と シングルページアプリケーションの違い
+### ※ マルチページアプリケーション と シングルページアプリケーションの違い
 - マルチ：ブラウザの画面要求（GET）またはデータ送信（POST）に対してHTMLを返却する。
 - シングル：最初に画面を表示し、その後はAjaxでデータの要求や送信がされる。
 
 <br>
 
-### ④ SPA化
+## ④ SPA化
 
 ※ 参考資料 https://www.hypertextcandy.com/vue-laravel-tutorial-introduction/
 
@@ -116,23 +113,23 @@ Vue.use(VueRouter);
   - "/api/regist"    ・・・  フォーム登録処理 (※)
 (※ 未実装)
 
-#### ■ ルートコンポーネント [ resources/js/components/App.vue ]
+### ■ ルートコンポーネント [ resources/js/components/App.vue ]
 - コンポーネントツリーの頂上に位置するコンポーネント
 - "router-view" 内に、ルートとマッチしたコンポーネントが表示される。
 
-#### ■ ページコンポーネント [ resources/js/components/pages/〇〇.vue ]
+### ■ ページコンポーネント [ resources/js/components/pages/〇〇.vue ]
 - "template" 内に、ページによって切り替える内容を記述する。
 
-#### ■ ルーティングの定義 [ resources/js/router.js ]
+### ■ ルーティングの定義 [ resources/js/router.js ]
 - VueRouterインスタンスを作成
 - ページ(url)に対して、表示するコンポーネントを設定
 
-#### ■ ルーティング定義を読み込む [ resources/js/app.js ]
+### ■ ルーティング定義を読み込む [ resources/js/app.js ]
 - app.jsに、router.jsで定義したルーティング定義をインポート
 ※ web.php内で、api以外のURLは、view内のform/index（views/index.blade.php）を表示するようにしており、<br>
 そのindex.blade.phpでapp.jsを読み込み、要素表示するようにしている。
 
-#### ☆ vue-head でmetaの設定・切り替え  
+### ☆ vue-head でmetaの設定・切り替え  
 - [ resources/js/app.js ]
 Vueインスタンスを作成。「head」要素内に、全ページ共通のhead内の項目を設定していく。
 
@@ -142,15 +139,15 @@ vueファイル下部にscriptタグを作成し、ページごとに切り替�
 
 <br>
 
-### ⑤ API実装
-#### ■ Ajax通信は axiosを使用 [ resources/js/components/pages/〇〇.vue ]
+## ⑤ API実装
+### ■ Ajax通信は axiosを使用 [ resources/js/components/pages/〇〇.vue ]
 - 子コンポーネント内で通信、表示(表示箇所が子コンポーネント内のため？)
 
 - API接続をどのライフサイクルフックで行うか
   - created => インスタンスの初期化が済んで props や computed にアクセスできる
   - mounted => created + DOMにアクセスできる
 
-#### ■ マスターデータをAPIから取得 [ resources/js/components/pages/〇〇.vue ]
+### ■ マスターデータをAPIから取得 [ resources/js/components/pages/〇〇.vue ]
 - inputタグを描画
 ※v-modelの値は、dataで初期値を設定しておく必要がある。
 
