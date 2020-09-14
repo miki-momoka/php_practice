@@ -99,6 +99,92 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   head: {
     title: {
@@ -389,6 +475,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+// ページ固有のhead要素を設定
+// 単一ファイルコンポーネント内で => export defaultを使用
 /* harmony default export */ __webpack_exports__["default"] = ({
   head: {
     title: {
@@ -12115,9 +12203,140 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Confirm")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "section",
+      { staticClass: "form confirm", attrs: { id: "contentsBox" } },
+      [
+        _c("div", { staticClass: "inner" }, [
+          _c(
+            "form",
+            {
+              staticClass: "clr",
+              attrs: { method: "post", action: "complete" }
+            },
+            [
+              _c("h2", { staticClass: "ttl2" }, [_vm._v("送付先入力フォーム")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "lead" }, [
+                _vm._v("\n        以下内容で間違いないかご確認いただき、"),
+                _c("br", { staticClass: "sp" }),
+                _vm._v("送信ボタンを押してください。\n      ")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "formBox" }, [
+                _c("table", [
+                  _c("tr", { staticClass: "error" }, [
+                    _c("th", [_c("b", [_vm._v("お名前")])]),
+                    _vm._v(" "),
+                    _c("td")
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("th", [_c("b", [_vm._v("フリガナ")])]),
+                    _vm._v(" "),
+                    _c("td")
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("th", [_c("b", [_vm._v("住所")])]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v("\n              〒-"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("br")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("th", [_c("b", [_vm._v("メールアドレス")])]),
+                    _vm._v(" "),
+                    _c("td")
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("th", [_c("b", [_vm._v("電話番号")])]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("\n              --\n            ")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "formQuestionnaire" }, [
+                  _c("dl", { staticClass: "formQuestionnaireBox" }, [
+                    _c("dt", [
+                      _c("b", [
+                        _vm._v(
+                          "あなたは、このキャンペーンをどこでお知りになりましたか"
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("・")])
+                  ]),
+                  _vm._v(" "),
+                  _c("dl", { staticClass: "formQuestionnaireBox" }, [
+                    _c("dt", [
+                      _c("b", [
+                        _vm._v(
+                          "この商品を購入した理由をお教えください（当てはまるものを全てお選びください）"
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("・")])
+                  ]),
+                  _vm._v(" "),
+                  _c("dl", { staticClass: "formQuestionnaireBox" }, [
+                    _c("dt", [
+                      _c("b", [
+                        _vm._v(
+                          "ご意見・ご感想がございましたら、ご自由にご記入ください。"
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dd")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "btnGroup clr" }, [
+                _c("p", { staticClass: "btn confirm" }, [
+                  _c(
+                    "button",
+                    {
+                      attrs: { type: "submit", name: "complete", value: "on" }
+                    },
+                    [_c("span", [_vm._v("送信する")])]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "btn back" }, [
+                  _c(
+                    "button",
+                    {
+                      attrs: { type: "submit", name: "backbutton", value: "on" }
+                    },
+                    [_c("span", [_vm._v("修正する")])]
+                  )
+                ])
+              ])
+            ]
+          )
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -28317,7 +28536,7 @@ __webpack_require__.r(__webpack_exports__);
  // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // パスとコンポーネントのマッピング
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // パスに対して、表示するコンポーネントを設定
 
 var routes = [{
   path: '/',
@@ -28337,6 +28556,7 @@ var routes = [{
 //   ]
 // },
 ]; // VueRouterインスタンスを作成する
+// routes => ルートの設定
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',

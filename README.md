@@ -4,16 +4,9 @@
 
 Laravelで構築しました。
 
-## ～ ブラッシュアップ 7/27 ～
-
-### ① 前回で学んだ部分を追加
-
-- その他選択時のバリデーション追加<br>
-- バリデーション前の文字整形
-
 <br><br>
 
-### ② DB/テーブル作成
+### ① DB/テーブル作成
 
 #### ■ マイグレーション [database/migrations] (テーブルの定義)
 コンテナに入り、www直下(artisanがある場所)へ移動してからマイグレーション実行
@@ -27,8 +20,6 @@ $ php artisan migrate
 
 <br>
 
-### ②-1 DBでマスター管理
-
 #### ■ シーダー作成・実行 [database/seeds] (テーブルに行データ追加)
 
 ```
@@ -41,7 +32,7 @@ $ php artisan db:seed
 $this->call(PrefecturesTableSeeder::class);
 ```
 
-#### ■ マスターをDB管理に変更
+#### ■ モデル作成 [app/]
 テーブルを操作するモデルを作成 [app/] DBと連携する。1テーブルに1モデル。
 ```
 $ php artisan make:model Prefectures
@@ -56,7 +47,7 @@ $master_pref = Prefecture::all()->toArray();
 
 <br>
 
-### ②-2. フォーム登録
+### ② フォーム登録
 
 1) Formモデル作成<br>
 2) 新しくインスタンスを作成。<br>
@@ -102,22 +93,22 @@ $ npm run watch
 https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja
 
 
-#### マルチページアプリケーション と シングルページアプリケーションの違い
+#### ※ マルチページアプリケーション と シングルページアプリケーションの違い
 - マルチ：ブラウザの画面要求（GET）またはデータ送信（POST）に対してHTMLを返却する。
 - シングル：最初に画面を表示し、その後はAjaxでデータの要求や送信がされる。
 
-#### Vue Router導入
+<br>
+
+### ④ SPA化
+
+※ 参考資料 https://www.hypertextcandy.com/vue-laravel-tutorial-introduction/
+
+- Vue Router導入
 ```
 $ npm install -D vue-router
 ```
 
-<br>
-
-### ③-1. SPA化
-
-※ 参考資料 https://www.hypertextcandy.com/vue-laravel-tutorial-introduction/
-
-#### Vue Routerを定義 (app.js内)
+- Vue Routerを定義 (app.js内)
 ```
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -131,122 +122,36 @@ Vue.use(VueRouter);
 	- "/api/regist"    ・・・  フォーム登録処理 (※)
 (※ 未実装)
 
-- ルートコンポーネント・・・コンポーネントツリーの頂上に位置するコンポーネント
-```
-[ resources/js/components/App.vue ]
-<template>
-  <div id="contentsWrap">
-		<section id="mv">
-			<h1>
-				<img src="common/img/img_mv.png" alt="dummy" class="pc">
-				<img src="common/img/sp/img_mv.png" alt="dummy" class="sp">
-			</h1>
-		</section>
-		
-    <router-view />
-  </div>
-</template>
-```
+#### ■ ルートコンポーネント [ resources/js/components/App.vue ]
+コンポーネントツリーの頂上に位置するコンポーネント
+
 <router-view />内に、ルートとマッチしたコンポーネントが表示される。
 
-- ページコンポーネント・・・切り替わるHTML部分
-```
-[ resources/js/components/pages/input.vue ]
-<template>
-  <section id="contentsBox" class="form input">
-  ..(省略)..
-</template>
+#### ■ ページコンポーネント [ resources/js/components/pages/〇〇.vue ]
 
+<template>内に、ページによって切り替える内容を記述する。
 
-[ resources/js/components/pages/confirm.vue ]
-```
+#### ■ ルーティングの定義 [ resources/js/router.js ]
+- VueRouterインスタンスを作成
+- ページ(url)に対して、表示するコンポーネントを設定
 
-- ルーティングの定義
-```
-[ resources/js/router.js ]
-// パスとコンポーネントのマッピング
-const routes = [
-  {
-    path: '/',
-    component: Input
-  },
-  {
-    path: '/confirm',
-    component: Confirm
-  }
-]
-
-// VueRouterインスタンスを作成する
-const router = new VueRouter({
-  mode: 'history', // 本来の URL の形を再現
-  routes
-})
-```
-
-- app.jsに、ルートコンポーネントとルーティング定義をインポート
-```
-new Vue({
-  el: '#app',
-  router, // ルーティングの定義を読み込む
-  components: { App }, // ルートコンポーネント(App.vue)の使用を宣言する
-  template: '<App />' // ルートコンポーネント(App.vue)を描画する
-})
-```
-※ web.php内で、api以外のURLは、view内のform/indexを表示するようにしており、<br>
+#### ■ ルーティング定義を読み込む [ resources/js/app.js ]
+- app.jsに、router.jsで定義したルーティング定義をインポート
+※ web.php内で、api以外のURLは、view内のform/index（views/index.blade.php）を表示するようにしており、<br>
 そのindex.blade.phpでapp.jsを読み込み、要素表示するようにしている。
 
 #### ☆ vue-head でmetaの設定・切り替え  
-全ページ共通のhead内の項目を設定。
-```
-[ app.js ]
-new Vue({
-	..(省略)..,
-	head: {
-		meta: [
-			{ he: 'X-UA-Compatible', c: 'IE=edge'},
-      		..(省略)..
-		],
-		link: [
-			{ rel: 'stylesheet' , href: 'common/css/default.css' , media: 'all' },
-			..(省略)..
-		],
-    script:[
-      { type: 'text/javascript', src: 'common/js/common.js' , body: true},
-    ]
-	}
-})
-```
+- [ resources/js/app.js ]
+Vueインスタンスを作成。「head」要素内に、全ページ共通のhead内の項目を設定していく。
 
-ページごとに切り替え
-```
-[ input.vue ] 
-<script>
-export default {
-  head: {
-    title:{inner: '入力画面', separator: '|' , complement: 'Laravelメールフォーム'},
-    link: [
-      { rel: 'stylesheet' , href: 'common/css/jquery.mCustomScrollbar.css' , media: 'all' },
-      ..(省略)..
-    ],
-    script: [
-      { src: '/common/js/jquery.mCustomScrollbar.js' },
-      ..(省略)..
-    ]
-  }
-}
-</script>
-```
-
-
-
+- [ resources/js/components/pages/〇〇.vue ]
+vueファイル下部にscriptタグを作成し、ページごとに切り替えるhead要素を記述。
+単一ファイルコンポーネントでscriptを使用する際は、export default で囲む必要がある。
 
 <br>
 
-### ②-2 フォーム送信
-
-### ③-. API実装
-
-- Ajax通信は axiosを使用
+### ⑤ API実装
+#### ■ Ajax通信は axiosを使用
 
 ※ axiosの利点<br>
 axiosは、promiseベースで組まれているため、<br>

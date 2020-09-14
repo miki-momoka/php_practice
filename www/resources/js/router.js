@@ -9,7 +9,7 @@ import Confirm from './components/pages/Confirm.vue'
 // これによって<RouterView />コンポーネントなどを使うことができる
 Vue.use(VueRouter)
 
-// パスとコンポーネントのマッピング
+// パスに対して、表示するコンポーネントを設定
 const routes = [
   {
     path: '/',
@@ -33,6 +33,7 @@ const routes = [
 ]
 
 // VueRouterインスタンスを作成する
+// routes => ルートの設定
 const router = new VueRouter({
   mode: 'history', // 本来の URL の形を再現
   routes

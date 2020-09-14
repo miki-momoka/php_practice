@@ -259,6 +259,8 @@
 </template>
 
 <script>
+// ページ固有のhead要素を設定
+// 単一ファイルコンポーネント内で => export defaultを使用
 export default {
   head: {
     title:{inner: '入力画面', separator: '|' , complement: 'Laravelメールフォーム'},
