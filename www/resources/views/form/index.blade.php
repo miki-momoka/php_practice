@@ -6,10 +6,6 @@
   <title>{{ config('app.name') }}</title>
 
   <!-- Scripts -->
-  {{-- <script src="common/js/jquery-1.8.3.min.js"></script>
-  <script src="common/js/jquery.mCustomScrollbar.js"></script>
-  <script src="form/js/entry_form.js"></script>
-	<script src="form/js/entry_form_input.js"></script> --}}
   <script src="{{ mix('js/app.js') }}" defer></script>
 
   {{-- <script src="{{ mix('css/app.css') }}" defer></script> --}}

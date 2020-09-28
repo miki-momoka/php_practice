@@ -60,7 +60,7 @@ table { /* markup tables with 'cellspacing="0"' */
 	display: none;
 }
 
-.v-enter-active, .v-leave-active {
+.v-enter-active, .v-leave-actibe {
 	transition: opacity 1s;
 }
   

@@ -99,12 +99,6 @@ class FormController extends Controller
         return $master;
     }
 
-    // バリデート
-    public function confirm(MailformRequest $request){
-        return $request;
-    }
-
-
     // function master(){
     //     $master_pref = Prefecture::all()->toArray();
     //     $master_q1 = Quest1::all()->toArray();
