@@ -17,6 +17,7 @@
 
 // api
 Route::get('/api/master', 'FormController@apiMaster');
+Route::post('/api/confirm', 'FormController@confirm');
 
 
 // APIのURL以外のリクエストに対してはindexテンプレートを返す

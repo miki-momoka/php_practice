@@ -2304,6 +2304,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // ページ固有のhead要素を設定
 // 単一ファイルコンポーネント内で => export defaultを使用
 // axiosを使う
@@ -2320,10 +2321,68 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); /
       q1Master: [],
       q2Master: [],
       prefMaster: [],
-      q1: null,
-      q2: null,
-      prefecture: null
+      form: {
+        name_sei: null,
+        name_mei: null // kana_sei: '',
+        // kana_mei: '',
+        // zip1: '',
+        // zip2: '',
+        // prefecture: '',
+        // address: '',
+        // building: '',
+        // email: '',
+        // tel1: '',
+        // tel2: '',
+        // tel3: '',
+        // q1: '',
+        // q1_other: '',
+        // q2: '',
+        // q2_other: '',
+        // q3: '',
+        // check_policy: ''
+
+      },
+      errorMsg: {
+        name: "お名前入力して"
+      }
     };
+  },
+  computed: {
+    validation: function validation() {
+      var form = this.form;
+      console.log(form.name_sei);
+      return {
+        // name : (() => {
+        //   if( form.name_sei && form.name_mei){
+        //     return false;
+        //   }else{
+        //     return true;
+        //   }
+        // })(),
+        name: !form.name_sei // tel : (() => {
+        //   if(!!form.tel) {
+        //     form.tel.replace(/[━.*‐.*―.*－.*\-.*ー.*\-]/gi,'')
+        //     if (!form.tel.match(/^(0[5-9]0[0-9]{8}|0[1-9][1-9][0-9]{7})$/)) {
+        //       return false
+        //     }
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // })(),
+        // email : (() => {
+        //   if(!!form.email) {
+        //     if (!form.email.match(/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/)) {
+        //       return false
+        //     }
+        //     return true
+        //   } else {
+        //     return false
+        //   }
+        // })()
+
+      };
+    }
   },
   created: function created() {
     // ※"this"のスコープ範囲はaxios内では切れている
@@ -2335,20 +2394,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); /
       self.input = true;
     });
   },
-  mounted: function mounted() {
-    this.$nextTick(function () {
-      // ビュー全体がレンダリングされた後にのみ実行されるコード
-      console.log($(".form .terms .scroll"));
-      $(".form .terms .scroll").mCustomScrollbar();
-      var ua = navigator.userAgent;
-
-      if (ua.indexOf('iPhone') < 0 && ua.indexOf('Android') < 0) {
-        $('.telhref span').each(function () {
-          $(this).unwrap();
-        });
-      }
-    });
-  },
+  // mounted: function(){
+  //   $(".form .terms .scroll").mCustomScrollbar();
+  //   var ua = navigator.userAgent;
+  //   if (ua.indexOf('iPhone') < 0 && ua.indexOf('Android') < 0) {
+  //     $('.telhref span').each(function () {
+  //       $(this).unwrap();
+  //     });
+  //   }
+  // },
   head: {
     title: {
       inner: '入力画面',
@@ -2380,7 +2434,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); /
     }, {
       type: 'text/javascript',
       src: 'form/js/entry_form_input.js',
-      body: true
+      body: true,
+      defer: true
     }]
   }
 });
@@ -14030,7 +14085,7 @@ var render = function() {
   return _c(
     "div",
     { attrs: { id: "contentsWrap" } },
-    [_c("p"), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("router-view")],
+    [_vm._m(0), _vm._v(" "), _c("router-view")],
     1
   )
 }
@@ -14235,779 +14290,1140 @@ var render = function() {
     { staticClass: "form input", attrs: { id: "contentsBox" } },
     [
       _c("transition", [
-        _vm.input
-          ? _c("div", { staticClass: "inner" }, [
-              _c(
-                "form",
-                {
-                  staticClass: "form clr",
-                  attrs: { method: "post", action: "confirm" }
-                },
-                [
-                  _c("h2", { staticClass: "ttl2" }, [
-                    _vm._v("\n          送付先入力フォーム\n        ")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "lead" }, [
-                    _vm._v("当選賞品の送付先をご入力ください。 \n          "),
-                    _c("span", { staticClass: "note" }, [
-                      _vm._v(
-                        "ご入力いただいた情報に誤りがございますと、賞品が届かない場合がございますのでご注意ください。"
-                      )
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.input,
+                expression: "input"
+              }
+            ],
+            staticClass: "inner"
+          },
+          [
+            _c(
+              "form",
+              {
+                staticClass: "form clr",
+                attrs: { method: "post", action: "/confirm" }
+              },
+              [
+                _c("h2", { staticClass: "ttl2" }, [
+                  _vm._v("\n          送付先入力フォーム\n        ")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "lead" }, [
+                  _vm._v("当選賞品の送付先をご入力ください。 \n          "),
+                  _c("span", { staticClass: "note" }, [
+                    _vm._v(
+                      "ご入力いただいた情報に誤りがございますと、賞品が届かない場合がございますのでご注意ください。"
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "formBox" }, [
+                  _c("table", [
+                    _c("tr", [
+                      _c("th", [_c("b", [_vm._v("お名前")])]),
+                      _vm._v(" "),
+                      _c("td", { class: { error: _vm.validation.name } }, [
+                        _c("p", [
+                          _c("span", [_vm._v("姓")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name_sei,
+                                expression: "form.name_sei"
+                              }
+                            ],
+                            staticClass: "size1",
+                            attrs: {
+                              type: "text",
+                              name: "name_sei",
+                              value: "",
+                              placeholder: "山田",
+                              maxlength: "12"
+                            },
+                            domProps: { value: _vm.form.name_sei },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "name_sei",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _c("span", [_vm._v("名")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name_mei,
+                                expression: "form.name_mei"
+                              }
+                            ],
+                            staticClass: "size1",
+                            attrs: {
+                              type: "text",
+                              name: "name_mei",
+                              value: "",
+                              placeholder: "太郎",
+                              maxlength: "12"
+                            },
+                            domProps: { value: _vm.form.name_mei },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "name_mei",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [
+                          _vm.validation.name
+                            ? _c("b", { staticClass: "errorTxt" }, [
+                                _vm._v(_vm._s(_vm.errorMsg.name))
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("th", [_c("b", [_vm._v("フリガナ")])]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("p", [
+                          _c("span", [_vm._v("セイ")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.kana_sei,
+                                expression: "form.kana_sei"
+                              }
+                            ],
+                            staticClass: "size1",
+                            attrs: {
+                              type: "text",
+                              name: "kana_sei",
+                              value: "",
+                              placeholder: "ヤマダ",
+                              maxlength: "12"
+                            },
+                            domProps: { value: _vm.form.kana_sei },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "kana_sei",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _c("span", [_vm._v("メイ")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.kana_mei,
+                                expression: "form.kana_mei"
+                              }
+                            ],
+                            staticClass: "size1",
+                            attrs: {
+                              type: "text",
+                              name: "kana_mei",
+                              value: "",
+                              placeholder: "タロウ",
+                              maxlength: "12"
+                            },
+                            domProps: { value: _vm.form.kana_mei },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "kana_mei",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("span")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("th", [_c("b", [_vm._v("住所")])]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "custom " }, [
+                        _c("ul", [
+                          _c("li", { staticClass: "zip" }, [
+                            _c("span", { staticClass: "mark" }, [_vm._v("〒")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.zip1,
+                                  expression: "form.zip1"
+                                }
+                              ],
+                              staticClass: "size2",
+                              attrs: {
+                                type: "text",
+                                name: "zip[1]",
+                                value: "",
+                                placeholder: "123",
+                                maxlength: "3",
+                                title: "半角数字を入力してください"
+                              },
+                              domProps: { value: _vm.form.zip1 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "zip1",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "bar" }, [_vm._v("-")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.zip2,
+                                  expression: "form.zip2"
+                                }
+                              ],
+                              staticClass: "size1",
+                              attrs: {
+                                type: "text",
+                                name: "zip[2]",
+                                value: "",
+                                placeholder: "1234",
+                                maxlength: "4",
+                                title: "半角数字を入力してください"
+                              },
+                              domProps: { value: _vm.form.zip2 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "zip2",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("span", [_vm._v("都道府県")]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.prefecture,
+                                    expression: "form.prefecture"
+                                  }
+                                ],
+                                attrs: { name: "prefecture" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "prefecture",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v("選択してください")
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.prefMaster, function(data, i) {
+                                  return _c(
+                                    "option",
+                                    { key: i, domProps: { value: i } },
+                                    [_vm._v(_vm._s(data))]
+                                  )
+                                })
+                              ],
+                              2
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("span", [_vm._v("市区町村番地")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.address,
+                                  expression: "form.address"
+                                }
+                              ],
+                              staticClass: "size3",
+                              attrs: {
+                                type: "text",
+                                name: "address",
+                                value: "",
+                                placeholder: "○○市△△町1-1 ",
+                                maxlength: "90"
+                              },
+                              domProps: { value: _vm.form.address },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "address",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("span", [_vm._v("建物名・号室")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.building,
+                                  expression: "form.building"
+                                }
+                              ],
+                              staticClass: "size3",
+                              attrs: {
+                                type: "text",
+                                name: "building",
+                                value: "",
+                                placeholder: "□□マンション　101号室",
+                                maxlength: "90"
+                              },
+                              domProps: { value: _vm.form.building },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "building",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("span")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("th", [_c("b", [_vm._v("メールアドレス")])]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "email " }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.email,
+                              expression: "form.email"
+                            }
+                          ],
+                          staticClass: "size3",
+                          attrs: {
+                            type: "text",
+                            name: "email",
+                            value: "",
+                            placeholder: "test@gpol.co.jp"
+                          },
+                          domProps: { value: _vm.form.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "email", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("th", [_c("b", [_vm._v("電話番号")])]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "tel" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.tel1,
+                              expression: "form.tel1"
+                            }
+                          ],
+                          staticClass: "size4",
+                          attrs: {
+                            type: "text",
+                            name: "tel[1]",
+                            value: "",
+                            placeholder: "06",
+                            maxlength: "4",
+                            title: "半角数字を入力してください"
+                          },
+                          domProps: { value: _vm.form.tel1 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "tel1", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "bar" }, [_vm._v("-")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.tel2,
+                              expression: "form.tel2"
+                            }
+                          ],
+                          staticClass: "size4",
+                          attrs: {
+                            type: "text",
+                            name: "tel[2]",
+                            value: "",
+                            placeholder: "0000",
+                            maxlength: "4",
+                            title: "半角数字を入力してください"
+                          },
+                          domProps: { value: _vm.form.tel2 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "tel2", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "bar" }, [_vm._v("-")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.tel3,
+                              expression: "form.tel3"
+                            }
+                          ],
+                          staticClass: "size4",
+                          attrs: {
+                            type: "text",
+                            name: "tel[3]",
+                            value: "",
+                            placeholder: "0000",
+                            maxlength: "4",
+                            title: "半角数字を入力してください"
+                          },
+                          domProps: { value: _vm.form.tel3 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "tel3", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span")
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "formBox" }, [
-                    _c("table", [
-                      _c("tr", [
-                        _c("th", [_c("b", [_vm._v("お名前")])]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("p", [
-                            _c("span", [_vm._v("姓")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "size1",
-                              attrs: {
-                                type: "text",
-                                name: "name_sei",
-                                value: "",
-                                placeholder: "山田",
-                                maxlength: "12"
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [
-                            _c("span", [_vm._v("名")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "size1",
-                              attrs: {
-                                type: "text",
-                                name: "name_mei",
-                                value: "",
-                                placeholder: "太郎",
-                                maxlength: "12"
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("span")
+                  _c("div", { staticClass: "formQuestionnaire" }, [
+                    _c("h3", { staticClass: "formQuestionnaireTtl" }, [
+                      _c("span", [
+                        _vm._v(
+                          "簡単なアンケートへのご協力を\n                "
+                        ),
+                        _c("br", { staticClass: "sp" }),
+                        _vm._v("お願いします\n              ")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dl", { staticClass: "formQuestionnaireBox" }, [
+                      _c("dt", [
+                        _c("b", [
+                          _vm._v(
+                            "あなたは、このキャンペーンをどこでお知りになりましたか"
+                          )
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("tr", [
-                        _c("th", [_c("b", [_vm._v("フリガナ")])]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("p", [
-                            _c("span", [_vm._v("セイ")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "size1",
-                              attrs: {
-                                type: "text",
-                                name: "kana_sei",
-                                value: "",
-                                placeholder: "ヤマダ",
-                                maxlength: "12"
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [
-                            _c("span", [_vm._v("メイ")]),
-                            _vm._v(" "),
-                            _c("input", {
-                              staticClass: "size1",
-                              attrs: {
-                                type: "text",
-                                name: "kana_mei",
-                                value: "",
-                                placeholder: "タロウ",
-                                maxlength: "12"
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("span")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("th", [_c("b", [_vm._v("住所")])]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "custom " }, [
-                          _c("ul", [
-                            _c("li", { staticClass: "zip" }, [
-                              _c("span", { staticClass: "mark" }, [
-                                _vm._v("〒")
-                              ]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "size2",
-                                attrs: {
-                                  type: "text",
-                                  name: "zip[1]",
-                                  value: "",
-                                  placeholder: "123",
-                                  maxlength: "3",
-                                  title: "半角数字を入力してください"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "bar" }, [_vm._v("-")]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "size1",
-                                attrs: {
-                                  type: "text",
-                                  name: "zip[2]",
-                                  value: "",
-                                  placeholder: "1234",
-                                  maxlength: "4",
-                                  title: "半角数字を入力してください"
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c("span", [_vm._v("都道府県")]),
-                              _vm._v(" "),
-                              _c(
-                                "select",
-                                {
+                      _c("dd", [
+                        _c(
+                          "ul",
+                          { staticClass: "formList formList02" },
+                          _vm._l(_vm.q1Master, function(data, i) {
+                            return _c("li", { key: i }, [
+                              _c("label", [
+                                _c("input", {
                                   directives: [
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.prefecture,
-                                      expression: "prefecture"
+                                      value: _vm.form.q1,
+                                      expression: "form.q1"
                                     }
                                   ],
+                                  attrs: { name: "q1", type: "radio" },
+                                  domProps: {
+                                    value: i,
+                                    checked: _vm._q(_vm.form.q1, i)
+                                  },
                                   on: {
                                     change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.prefecture = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
+                                      return _vm.$set(_vm.form, "q1", i)
                                     }
                                   }
-                                },
-                                [
-                                  _c("option", { attrs: { value: "0" } }, [
-                                    _vm._v("選択してください")
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.prefMaster, function(data, i) {
-                                    return _c(
-                                      "option",
-                                      { key: i, domProps: { value: i } },
-                                      [_vm._v(_vm._s(data))]
-                                    )
-                                  })
-                                ],
-                                2
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c("span", [_vm._v("市区町村番地")]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "size3",
-                                attrs: {
-                                  type: "text",
-                                  name: "address",
-                                  value: "",
-                                  placeholder: "○○市△△町1-1 ",
-                                  maxlength: "90"
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c("span", [_vm._v("建物名・号室")]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "size3",
-                                attrs: {
-                                  type: "text",
-                                  name: "building",
-                                  value: "",
-                                  placeholder: "□□マンション　101号室",
-                                  maxlength: "90"
-                                }
-                              })
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("span")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("th", [_c("b", [_vm._v("メールアドレス")])]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "email " }, [
-                          _c("input", {
-                            staticClass: "size3",
-                            attrs: {
-                              type: "text",
-                              name: "email",
-                              value: "",
-                              placeholder: "test@gpol.co.jp"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("span")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("th", [_c("b", [_vm._v("電話番号")])]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "tel" }, [
-                          _c("input", {
-                            staticClass: "size4",
-                            attrs: {
-                              type: "text",
-                              name: "tel[1]",
-                              value: "",
-                              placeholder: "06",
-                              maxlength: "4",
-                              title: "半角数字を入力してください"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "bar" }, [_vm._v("-")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "size4",
-                            attrs: {
-                              type: "text",
-                              name: "tel[2]",
-                              value: "",
-                              placeholder: "0000",
-                              maxlength: "4",
-                              title: "半角数字を入力してください"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "bar" }, [_vm._v("-")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "size4",
-                            attrs: {
-                              type: "text",
-                              name: "tel[3]",
-                              value: "",
-                              placeholder: "0000",
-                              maxlength: "4",
-                              title: "半角数字を入力してください"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("span")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "formQuestionnaire" }, [
-                      _c("h3", { staticClass: "formQuestionnaireTtl" }, [
-                        _c("span", [
-                          _vm._v(
-                            "簡単なアンケートへのご協力を\n                "
-                          ),
-                          _c("br", { staticClass: "sp" }),
-                          _vm._v("お願いします\n              ")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("dl", { staticClass: "formQuestionnaireBox" }, [
-                        _c("dt", [
-                          _c("b", [
-                            _vm._v(
-                              "あなたは、このキャンペーンをどこでお知りになりましたか"
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("dd", [
-                          _c(
-                            "ul",
-                            { staticClass: "formList formList02" },
-                            _vm._l(_vm.q1Master, function(data, i) {
-                              return _c("li", { key: i }, [
-                                _c("label", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.q1,
-                                        expression: "q1"
-                                      }
-                                    ],
-                                    attrs: { type: "radio" },
-                                    domProps: {
-                                      value: i,
-                                      checked: _vm._q(_vm.q1, i)
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        _vm.q1 = i
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v(_vm._s(data))])
-                                ])
+                                }),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(data))])
                               ])
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "formInputOther" }, [
-                            _c("input", {
-                              attrs: {
-                                name: "q1_other",
-                                type: "text",
-                                value: ""
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("span")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("dl", { staticClass: "formQuestionnaireBox" }, [
-                        _c("dt", [
-                          _c("b", [
-                            _vm._v(
-                              "この商品を購入した理由をお教えください（当てはまるものを全てお選びください）"
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("dd", [
-                          _c(
-                            "ul",
-                            { staticClass: "formList formList02" },
-                            _vm._l(_vm.q2Master, function(data, i) {
-                              return _c("li", { key: i }, [
-                                _c("label", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.q2,
-                                        expression: "q2"
-                                      }
-                                    ],
-                                    attrs: { type: "checkbox" },
-                                    domProps: {
-                                      value: i,
-                                      checked: Array.isArray(_vm.q2)
-                                        ? _vm._i(_vm.q2, i) > -1
-                                        : _vm.q2
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        var $$a = _vm.q2,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = i,
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              (_vm.q2 = $$a.concat([$$v]))
-                                          } else {
-                                            $$i > -1 &&
-                                              (_vm.q2 = $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1)))
-                                          }
-                                        } else {
-                                          _vm.q2 = $$c
-                                        }
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", [_vm._v(_vm._s(data))])
-                                ])
-                              ])
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "formInputOther" }, [
-                            _c("input", {
-                              attrs: {
-                                name: "q2_other",
-                                type: "text",
-                                value: ""
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("span")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("dl", { staticClass: "formQuestionnaireBox" }, [
-                        _c("dt", [
-                          _c("b", [
-                            _vm._v(
-                              "ご意見・ご感想がございましたら、ご自由にご記入ください。"
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("dd", [
-                          _c("textarea", {
-                            attrs: {
-                              name: "q3",
-                              placeholder:
-                                "ご意見・ご感想がございましたら、400字以内でご記入ください"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("span")
-                        ])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("h3", [
-                    _vm._v("キャンペーン利用規約\n          "),
-                    _c("br", { staticClass: "sp" }),
-                    _vm._v("および注意事項\n        ")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "terms" }, [
-                    _c("dl", { staticClass: "scroll" }, [
-                      _c("dt", [_vm._v("キャンペーンについて")]),
-                      _vm._v(" "),
-                      _c("dd", [
-                        _c("ul", { staticClass: "listDot" }, [
-                          _c("li", [
-                            _vm._v(
-                              "応募期間：2019年11月1日（金）～2020年1月31日（金）"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "賞品は送付先を送信いただいてから、\n                  "
-                            ),
-                            _c("b", { staticClass: "red" }, [
-                              _vm._v("2ヶ月以内に順次発送いたします。")
                             ])
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "パッケージにキャンペーンシールが貼ってある商品がキャンペーン対象商品となります。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "2019年7月1日（月）～9月30日（月）に開催しました\n                  "
-                            ),
-                            _c("b", { staticClass: "red" }, [
-                              _vm._v(
-                                "「アーモンドのある暮らしキャンペーン」のシリアルコードは登録できません"
-                              )
-                            ]),
-                            _vm._v("のでご注意ください。\n                  "),
-                            _c("br"),
-                            _vm._v(
-                              "なお、前回お使いのIDとパスワードは引き続きお使いいただけます。\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "応募期間中であっても、対象商品がなくなり次第、終了とさせていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "本キャンペーンへのご参加はキャンペーンサイトからのご応募に限ります。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "同一のシリアルコードを使った複数回のポイント登録はできません。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "期間中、何回でもご応募いただけますが、同一賞品の当選権利はお一人様1回のみとさせていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c("b", { staticClass: "red" }, [
-                              _vm._v(
-                                "マイページでの応募のご利用は2020年1月31日(金)23：59まで"
-                              )
-                            ]),
-                            _vm._v("となります。\n                ")
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c("b", { staticClass: "red" }, [
-                              _vm._v(
-                                "残ったポイントは2020年1月31日（金）23：59で消滅します"
-                              )
-                            ]),
-                            _vm._v(
-                              "ので、お早めにご応募ください。\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "本キャンペーンへのご参加は、日本在住の方に限らせていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "賞品の仕様は予告なく変わる可能性がございます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "ご応募の途中でインターネット接続が途切れてしまった場合に、ご応募が無効となる場合がございます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "ご応募に関して不正な行為があった場合、当選を取り消させていただく場合がございます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "2020年3月31日（火）を過ぎても賞品が届かない場合は、キャンペーン事務局(\n                  "
-                            ),
-                            _c(
-                              "a",
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "formInputOther" }, [
+                          _c("input", {
+                            directives: [
                               {
-                                staticClass: "sp",
-                                attrs: { href: "tel:0000000000" }
-                              },
-                              [_vm._v("00-0000-0000")]
-                            ),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "tel pc" }, [
-                              _vm._v("00-0000-0000")
-                            ]),
-                            _vm._v(
-                              ")までお問い合わせください。\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "本キャンペーンの応募にかかるインターネット接続料および通信費は応募者のご負担となります。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "インターネット接続が十分に確保されている状態でご応募ください。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "主催者側は、キャンペーン詳細確認に伴う使用機器・通信における障害、損傷及び応募時の不具合等についての責任は一切負いかねます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "社員ならびに関係者は本キャンペーンに応募できません。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "キャンペーン終了後でも対象商品が販売されている場合がございますが、ご応募はキャンペーン期間中のみの受付とさせていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "ご入力いただいた住所が不明、連絡不能などの理由により賞品がお届けできない場合は、当選の権利を無効とさせていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "賞品の交換、換金、返品等には応じかねますので、予めご了承ください。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "当選の権利はご本人様のもので、第三者に譲渡・換金はできません。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "賞品のお届け先は、日本国内に限らせていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "シリアルコードはキャンペーン終了まで大切に保管してください。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "抽選に関するお問い合わせはお受けできません。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "配送中の紛失等の事故については、当社では責任を負いかねますので、ご了承ください。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "賞品の配送に関しては宅配業者などを利用させていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v("賞品のお届け日時のご指定はできません。")
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("dt", [_vm._v("推奨環境")]),
-                      _vm._v(" "),
-                      _c("dd", [
-                        _c("ul", { staticClass: "listDot" }, [
-                          _c("li", [
-                            _vm._v(
-                              "本キャンペーンサイトの推奨環境は、以下となります。推奨環境以外の端末ではご応募いただけない場合がございます。"
-                            )
-                          ])
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.q1_other,
+                                expression: "form.q1_other"
+                              }
+                            ],
+                            attrs: {
+                              name: "q1_other",
+                              type: "text",
+                              value: ""
+                            },
+                            domProps: { value: _vm.form.q1_other },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "q1_other",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
                         ]),
                         _vm._v(" "),
-                        _c("dl", { staticClass: "tSite" }, [
-                          _c("dt", [_vm._v("［PC］")]),
-                          _vm._v(" "),
-                          _c("dd", [
-                            _vm._v(
-                              "Windows：Internet Explorer11、Edge 最新版、Google Chrome 最新版、Mozilla Firefox 最新版"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("dd", [_vm._v("Macintosh：Safari 最新版")])
-                        ]),
-                        _vm._v(" "),
-                        _c("dl", { staticClass: "tSite" }, [
-                          _c("dt", [
-                            _vm._v("［スマートフォン・タブレットの場合］")
-                          ]),
-                          _vm._v(" "),
-                          _c("dd", [_vm._v("iOS 10.0以上 / Safari 最新版")]),
-                          _vm._v(" "),
-                          _c("dd", [
-                            _vm._v("Android 5.0以上 / Google Chrome 最新版")
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("dt", [_vm._v("その他")]),
-                      _vm._v(" "),
-                      _c("dd", [
-                        _c("ul", { staticClass: "listDot" }, [
-                          _c("li", [
-                            _vm._v(
-                              "個人情報詳細につきましては「\n                  "
-                            ),
-                            _c("a", { attrs: { href: "#" } }, [
-                              _vm._v("個人情報保護について")
-                            ]),
-                            _vm._v("」をご参照ください。\n                ")
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "ご入力いただいたお客様の個人情報は、住所・氏名・電話番号は賞品発送業務の為、生年月日・性別の項目に関しては商品の購買実態調査の為に利用させていただきます。"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "個人情報はお客様の同意なしに、業務委託先以外の第三者に開示・提供することはありません。（法令などにより開示を求められた場合を除く）"
-                            )
-                          ])
-                        ])
+                        _c("span")
                       ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "check " }, [
-                    _c("label", { attrs: { for: "checkPolicy" } }, [
-                      _c("input", {
-                        attrs: {
-                          name: "check_policy",
-                          id: "checkPolicy",
-                          type: "checkbox",
-                          value: "1"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("span", [_c("b", [_vm._v("上記規約に同意する")])])
                     ]),
                     _vm._v(" "),
-                    _c("span")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "btn confirm" }, [
-                    _c("button", { attrs: { type: "submit", disabled: "" } }, [
-                      _c("span", [_vm._v("確認画面へ")])
+                    _c("dl", { staticClass: "formQuestionnaireBox" }, [
+                      _c("dt", [
+                        _c("b", [
+                          _vm._v(
+                            "この商品を購入した理由をお教えください（当てはまるものを全てお選びください）"
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("dd", [
+                        _c(
+                          "ul",
+                          { staticClass: "formList formList02" },
+                          _vm._l(_vm.q2Master, function(data, i) {
+                            return _c("li", { key: i }, [
+                              _c("label", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.q2,
+                                      expression: "form.q2"
+                                    }
+                                  ],
+                                  attrs: { name: "q2", type: "checkbox" },
+                                  domProps: {
+                                    value: i,
+                                    checked: Array.isArray(_vm.form.q2)
+                                      ? _vm._i(_vm.form.q2, i) > -1
+                                      : _vm.form.q2
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$a = _vm.form.q2,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = i,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            _vm.$set(
+                                              _vm.form,
+                                              "q2",
+                                              $$a.concat([$$v])
+                                            )
+                                        } else {
+                                          $$i > -1 &&
+                                            _vm.$set(
+                                              _vm.form,
+                                              "q2",
+                                              $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1))
+                                            )
+                                        }
+                                      } else {
+                                        _vm.$set(_vm.form, "q2", $$c)
+                                      }
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(data))])
+                              ])
+                            ])
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "formInputOther" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.q2_other,
+                                expression: "form.q2_other"
+                              }
+                            ],
+                            attrs: {
+                              name: "q2_other",
+                              type: "text",
+                              value: ""
+                            },
+                            domProps: { value: _vm.form.q2_other },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "q2_other",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("span")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dl", { staticClass: "formQuestionnaireBox" }, [
+                      _c("dt", [
+                        _c("b", [
+                          _vm._v(
+                            "ご意見・ご感想がございましたら、ご自由にご記入ください。"
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("dd", [
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.q3,
+                              expression: "form.q3"
+                            }
+                          ],
+                          attrs: {
+                            name: "q3",
+                            placeholder:
+                              "ご意見・ご感想がございましたら、400字以内でご記入ください"
+                          },
+                          domProps: { value: _vm.form.q3 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "q3", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span")
+                      ])
                     ])
                   ])
-                ]
-              )
-            ])
-          : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("h3", [
+                  _vm._v("キャンペーン利用規約\n          "),
+                  _c("br", { staticClass: "sp" }),
+                  _vm._v("および注意事項\n        ")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "terms" }, [
+                  _c("dl", { staticClass: "scroll" }, [
+                    _c("dt", [_vm._v("キャンペーンについて")]),
+                    _vm._v(" "),
+                    _c("dd", [
+                      _c("ul", { staticClass: "listDot" }, [
+                        _c("li", [
+                          _vm._v(
+                            "応募期間：2019年11月1日（金）～2020年1月31日（金）"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "賞品は送付先を送信いただいてから、\n                  "
+                          ),
+                          _c("b", { staticClass: "red" }, [
+                            _vm._v("2ヶ月以内に順次発送いたします。")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "パッケージにキャンペーンシールが貼ってある商品がキャンペーン対象商品となります。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "2019年7月1日（月）～9月30日（月）に開催しました\n                  "
+                          ),
+                          _c("b", { staticClass: "red" }, [
+                            _vm._v(
+                              "「アーモンドのある暮らしキャンペーン」のシリアルコードは登録できません"
+                            )
+                          ]),
+                          _vm._v("のでご注意ください。\n                  "),
+                          _c("br"),
+                          _vm._v(
+                            "なお、前回お使いのIDとパスワードは引き続きお使いいただけます。\n                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "応募期間中であっても、対象商品がなくなり次第、終了とさせていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "本キャンペーンへのご参加はキャンペーンサイトからのご応募に限ります。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "同一のシリアルコードを使った複数回のポイント登録はできません。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "期間中、何回でもご応募いただけますが、同一賞品の当選権利はお一人様1回のみとさせていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("b", { staticClass: "red" }, [
+                            _vm._v(
+                              "マイページでの応募のご利用は2020年1月31日(金)23：59まで"
+                            )
+                          ]),
+                          _vm._v("となります。\n                ")
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("b", { staticClass: "red" }, [
+                            _vm._v(
+                              "残ったポイントは2020年1月31日（金）23：59で消滅します"
+                            )
+                          ]),
+                          _vm._v(
+                            "ので、お早めにご応募ください。\n                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "本キャンペーンへのご参加は、日本在住の方に限らせていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "賞品の仕様は予告なく変わる可能性がございます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "ご応募の途中でインターネット接続が途切れてしまった場合に、ご応募が無効となる場合がございます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "ご応募に関して不正な行為があった場合、当選を取り消させていただく場合がございます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "2020年3月31日（火）を過ぎても賞品が届かない場合は、キャンペーン事務局(\n                  "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "sp",
+                              attrs: { href: "tel:0000000000" }
+                            },
+                            [_vm._v("00-0000-0000")]
+                          ),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "tel pc" }, [
+                            _vm._v("00-0000-0000")
+                          ]),
+                          _vm._v(
+                            ")までお問い合わせください。\n                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "本キャンペーンの応募にかかるインターネット接続料および通信費は応募者のご負担となります。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "インターネット接続が十分に確保されている状態でご応募ください。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "主催者側は、キャンペーン詳細確認に伴う使用機器・通信における障害、損傷及び応募時の不具合等についての責任は一切負いかねます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "社員ならびに関係者は本キャンペーンに応募できません。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "キャンペーン終了後でも対象商品が販売されている場合がございますが、ご応募はキャンペーン期間中のみの受付とさせていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "ご入力いただいた住所が不明、連絡不能などの理由により賞品がお届けできない場合は、当選の権利を無効とさせていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "賞品の交換、換金、返品等には応じかねますので、予めご了承ください。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "当選の権利はご本人様のもので、第三者に譲渡・換金はできません。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "賞品のお届け先は、日本国内に限らせていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "シリアルコードはキャンペーン終了まで大切に保管してください。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v("抽選に関するお問い合わせはお受けできません。")
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "配送中の紛失等の事故については、当社では責任を負いかねますので、ご了承ください。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "賞品の配送に関しては宅配業者などを利用させていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v("賞品のお届け日時のご指定はできません。")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dt", [_vm._v("推奨環境")]),
+                    _vm._v(" "),
+                    _c("dd", [
+                      _c("ul", { staticClass: "listDot" }, [
+                        _c("li", [
+                          _vm._v(
+                            "本キャンペーンサイトの推奨環境は、以下となります。推奨環境以外の端末ではご応募いただけない場合がございます。"
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("dl", { staticClass: "tSite" }, [
+                        _c("dt", [_vm._v("［PC］")]),
+                        _vm._v(" "),
+                        _c("dd", [
+                          _vm._v(
+                            "Windows：Internet Explorer11、Edge 最新版、Google Chrome 最新版、Mozilla Firefox 最新版"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("dd", [_vm._v("Macintosh：Safari 最新版")])
+                      ]),
+                      _vm._v(" "),
+                      _c("dl", { staticClass: "tSite" }, [
+                        _c("dt", [
+                          _vm._v("［スマートフォン・タブレットの場合］")
+                        ]),
+                        _vm._v(" "),
+                        _c("dd", [_vm._v("iOS 10.0以上 / Safari 最新版")]),
+                        _vm._v(" "),
+                        _c("dd", [
+                          _vm._v("Android 5.0以上 / Google Chrome 最新版")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("dt", [_vm._v("その他")]),
+                    _vm._v(" "),
+                    _c("dd", [
+                      _c("ul", { staticClass: "listDot" }, [
+                        _c("li", [
+                          _vm._v(
+                            "個人情報詳細につきましては「\n                  "
+                          ),
+                          _c("a", { attrs: { href: "#" } }, [
+                            _vm._v("個人情報保護について")
+                          ]),
+                          _vm._v("」をご参照ください。\n                ")
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "ご入力いただいたお客様の個人情報は、住所・氏名・電話番号は賞品発送業務の為、生年月日・性別の項目に関しては商品の購買実態調査の為に利用させていただきます。"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            "個人情報はお客様の同意なしに、業務委託先以外の第三者に開示・提供することはありません。（法令などにより開示を求められた場合を除く）"
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "check " }, [
+                  _c("label", { attrs: { for: "checkPolicy" } }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.check_policy,
+                          expression: "form.check_policy"
+                        }
+                      ],
+                      attrs: {
+                        name: "check_policy",
+                        id: "checkPolicy",
+                        type: "checkbox",
+                        value: "1"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.form.check_policy)
+                          ? _vm._i(_vm.form.check_policy, "1") > -1
+                          : _vm.form.check_policy
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.form.check_policy,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = "1",
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.form,
+                                  "check_policy",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.form,
+                                  "check_policy",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.form, "check_policy", $$c)
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_c("b", [_vm._v("上記規約に同意する")])])
+                  ]),
+                  _vm._v(" "),
+                  _c("span")
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "btn confirm" }, [
+                  _c("button", { attrs: { type: "submit" } }, [
+                    _c("span", [_vm._v("確認画面へ")])
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
       ])
     ],
     1

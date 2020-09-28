@@ -1,6 +1,5 @@
 <template>
   <div id="contentsWrap">
-	  <p></p>
 		<section id="mv">
 			<h1>
 				<img src="common/img/img_mv.png" alt="dummy" class="pc">
