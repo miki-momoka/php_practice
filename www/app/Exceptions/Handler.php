@@ -50,6 +50,7 @@ class Handler extends ExceptionHandler
     // CSRFトークンの有効期限切れ
     public function render($request, Exception $exception)
     {
+        print "トークンエラー";die();
         // 「the page has expired due to inactivity. please refresh and try again」を表示させない
         if ($exception instanceof TokenMismatchException) {
             return redirect('/form/input')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');

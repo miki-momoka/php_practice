@@ -1,9 +1,9 @@
 <template>
   <section id="contentsBox" class="form input">
     <transition>
-      <div class="inner" v-if="input">
+      <div class="inner" v-show="input">
         <!-- フェードイン・アウト -->
-        <form method="post" class="form clr" action="confirm" >
+        <form v-on:submit="$router.push('/confirm')" class="form clr">
           <h2 class="ttl2">
             送付先入力フォーム
           </h2>
@@ -16,17 +16,18 @@
                 <th>
                   <b>お名前</b>
                 </th>
-                <td>
+                <td v-bind:class="{'error':validateName}">
                   <p>
                     <span>姓</span>
-                    <input type="text" name="name_sei" value="" placeholder="山田" class="size1" maxlength="12">
+                    <input type="text" name="name_sei" v-model="form.name_sei" value="" placeholder="山田" class="size1" maxlength="50">
                   </p>
                   <p>
                     <span>名</span>
-                    <input type="text" name="name_mei" value="" placeholder="太郎" class="size1" maxlength="12">
+                    <input type="text" name="name_mei" v-model="form.name_mei" value="" placeholder="太郎" class="size1" maxlength="50">
                   </p>
                   <span>
-    
+                    <b class="errorTxt" v-if="validateNameSei">{{ errorMsg.nameSei }}</b>
+                    <b class="errorTxt" v-if="validateNameMei">{{ errorMsg.nameMei }}</b>
                   </span>
                 </td>
               </tr>
@@ -34,17 +35,17 @@
                 <th>
                   <b>フリガナ</b>
                 </th>
-                <td >
+                <td>
                   <p>
                     <span>セイ</span>
-                    <input type="text" name="kana_sei" value="" placeholder="ヤマダ" class="size1" maxlength="12">
+                    <input type="text" name="kana_sei" v-model="form.kana_sei" value="" placeholder="ヤマダ" class="size1" maxlength="50">
                   </p>
                   <p>
                     <span>メイ</span>
-                    <input type="text" name="kana_mei" value="" placeholder="タロウ" class="size1" maxlength="12">
+                    <input type="text" name="kana_mei" v-model="form.kana_mei" value="" placeholder="タロウ" class="size1" maxlength="50">
                   </p>
                   <span>
-
+                    <b class="errorTxt"></b>
                   </span>
                 </td>
               </tr>
@@ -56,27 +57,27 @@
                   <ul>
                     <li class="zip">
                       <span class="mark">〒</span>
-                      <input type="text" name="zip[1]" value="" placeholder="123" class="size2" maxlength="3"  title="半角数字を入力してください">
+                      <input type="text" name="zip[1]" v-model="form.zip1" value="" placeholder="123" class="size2" maxlength="3"  title="半角数字を入力してください">
                       <span class="bar">-</span>
-                      <input type="text" name="zip[2]" value="" placeholder="1234" class="size1" maxlength="4"  title="半角数字を入力してください">
+                      <input type="text" name="zip[2]" v-model="form.zip2" value="" placeholder="1234" class="size1" maxlength="4"  title="半角数字を入力してください">
                     </li>
                     <li>
                       <!-- 
                         マスターデータ表示
                       -->
                       <span>都道府県</span>
-                      <select v-model="prefecture">
+                      <select name="prefecture" v-model="form.prefecture">
                         <option value="0">選択してください</option>
                           <option v-for="(data,i) in prefMaster" :key="i" :value="i" >{{data}}</option>
                       </select>
                     </li>
                     <li>
                       <span>市区町村番地</span>
-                      <input type="text" name="address" value="" placeholder="○○市△△町1-1 " class="size3" maxlength="90">
+                      <input type="text" name="address" v-model="form.address" value="" placeholder="○○市△△町1-1 " class="size3" maxlength="90">
                     </li>
                     <li>
                       <span>建物名・号室</span>
-                      <input type="text" name="building" value="" placeholder="□□マンション　101号室" class="size3" maxlength="90">
+                      <input type="text" name="building" v-model="form.building" value="" placeholder="□□マンション　101号室" class="size3" maxlength="90">
                     </li>
                   </ul>
                   <span>
@@ -89,7 +90,7 @@
                   <b>メールアドレス</b>
                 </th>
                 <td class="email ">
-                  <input type="text" name="email" value="" placeholder="test@gpol.co.jp" class="size3">
+                  <input type="text" name="email" v-model="form.email" value="" placeholder="test@gpol.co.jp" class="size3">
                   <span>
                     
                   </span>
@@ -100,11 +101,11 @@
                   <b>電話番号</b>
                 </th>
                 <td class="tel">
-                  <input type="text" name="tel[1]" value="" placeholder="06" class="size4" maxlength="4"  title="半角数字を入力してください">
+                  <input type="text" name="tel[1]" v-model="form.tel1" value="" placeholder="06" class="size4" maxlength="4"  title="半角数字を入力してください">
                   <span class="bar">-</span>
-                  <input type="text" name="tel[2]" value="" placeholder="0000" class="size4" maxlength="4"  title="半角数字を入力してください">
+                  <input type="text" name="tel[2]" v-model="form.tel2" value="" placeholder="0000" class="size4" maxlength="4"  title="半角数字を入力してください">
                   <span class="bar">-</span>
-                  <input type="text" name="tel[3]" value="" placeholder="0000" class="size4" maxlength="4"  title="半角数字を入力してください">
+                  <input type="text" name="tel[3]" v-model="form.tel3" value="" placeholder="0000" class="size4" maxlength="4"  title="半角数字を入力してください">
                   <span>
         
                   </span>
@@ -125,13 +126,13 @@
                   <ul class="formList formList02">
                     <li v-for="(data,i) in q1Master" :key="i">
                       <label>
-                        <input v-model="q1" :value="i" type="radio" >
+                        <input name="q1" v-model="form.q1" :value="i" type="radio" >
                         <span>{{data}}</span>
                       </label>
                     </li>
                   </ul>
                   <div class="formInputOther">
-                    <input name="q1_other" type="text" value="">
+                    <input name="q1_other" v-model="form.q1_other" type="text" value="">
                   </div>
                   <span>
     
@@ -146,13 +147,13 @@
                   <ul class="formList formList02">
                     <li v-for="(data,i) in q2Master" :key="i">
                       <label>
-                        <input v-model="q2" :value="i" type="checkbox" >
+                        <input name="q2" v-model="form.q2" :value="i" type="checkbox" >
                         <span>{{data}}</span>
                       </label>
                     </li>
                   </ul>
                   <div class="formInputOther">
-                    <input name="q2_other" type="text" value="">
+                    <input name="q2_other" v-model="form.q2_other" type="text" value="">
                   </div>
                   <span>
 
@@ -164,7 +165,7 @@
                   <b>ご意見・ご感想がございましたら、ご自由にご記入ください。</b>
                 </dt>
                 <dd >
-                  <textarea name="q3" placeholder="ご意見・ご感想がございましたら、400字以内でご記入ください"></textarea>
+                  <textarea name="q3" v-model="form.q3" placeholder="ご意見・ご感想がございましたら、400字以内でご記入ください"></textarea>
                   <span>
                   
                   </span>
@@ -253,7 +254,7 @@
           </div>
           <p class="check ">
             <label for="checkPolicy">
-              <input name="check_policy" id="checkPolicy" type="checkbox" value="1" />
+              <input name="check_policy" v-model="form.check_policy" id="checkPolicy" type="checkbox" value="1" />
               <span>
                 <b>上記規約に同意する</b>
               </span>
@@ -263,7 +264,8 @@
             </span>
           </p>
           <p class="btn confirm">
-            <button type="submit" disabled>
+            <button type="submit" >
+              <!-- disabled -->
               <span>確認画面へ</span>
             </button>
           </p>
@@ -284,43 +286,74 @@ const axios = require('axios');
 // マスターデータ使って表示する
 // Vueインスタンス(app.js) => 親(ルート)コンポーネントのみ定義しているから×(?)
 // 親コンポーネント(App.vue) => 共通のマスターを表示させたいのはrouter-view 内だから×(?)
+
 export default {
+  props: {
+    form: Object
+  },
   data: function() {
     return {
-      loading: true,
       input: false,
       q1Master: [],
       q2Master: [],
       prefMaster: [],
-      q1: null,
-      q2: null,
-      prefecture: null
+      errorMsg:{
+        nameSei: "",
+        nameMei: "",
+        kana: ""
+      }
+    }
+  },
+  computed: {
+    // *****************************
+    // VeeValidateを使わない方法
+    // *****************************
+    // name_sei
+    validateNameSei: function (){
+      if(this.form.name_sei !== null){
+        if(this.form.name_sei == ''){
+          this.errorMsg.nameSei = "お名前(姓)を入力してください。";
+          return true;
+        }else if(this.form.name_sei.length > 12){
+          this.errorMsg.nameSei = "お名前(姓)は12文字以内で入力してください。";
+          return true;
+        }
+      }
+    },
+     // name_mei
+    validateNameMei: function (){
+      if(this.form.name_mei !== null){
+        if(this.form.name_mei == ''){
+          this.errorMsg.nameMei = "お名前(姓)を入力してください。";
+          return true;
+        }else if(this.form.name_mei.length > 12){
+          this.errorMsg.nameMei = "お名前(姓)は12文字以内で入力してください。";
+          return true;
+        }
+      }
+    },
+     // name_sei・name_mei (tdタグに付与する用に)
+    validateName: function(){
+      if(this.validateNameSei || this.validateNameMei){
+        return true;
+      }
+    },
+  },
+  methods:{
+    checkForm: function (e) {
+      console.log("checkForm");
     }
   },
   created: function () {
-    // ※"this"のスコープ範囲はaxios内では切れている
+    // ※"this"のスコープ範囲はaxios内では切れている 
     let self = this;
 		axios.get('/api/master')
     .then(function (response) {
       self.q1Master = response.data.q1;
       self.q2Master = response.data.q2;
       self.prefMaster = response.data.pref;
+      // マスターデータ取得後、要素を表示する↓
       self.input = true;
-
-      
-    })
-  },
-  mounted() {
-    this.$nextTick(function () {
-      // ビュー全体がレンダリングされた後にのみ実行されるコード
-      console.log($(".form .terms .scroll"));
-      $(".form .terms .scroll").mCustomScrollbar();
-      var ua = navigator.userAgent;
-      if (ua.indexOf('iPhone') < 0 && ua.indexOf('Android') < 0) {
-        $('.telhref span').each(function () {
-          $(this).unwrap();
-        });
-      }
     })
   },
   head: {
@@ -333,10 +366,8 @@ export default {
     script: [      
       { type: 'text/javascript', src: 'common/js/jquery.mCustomScrollbar.js' ,body: true },
       { type: 'text/javascript', src: 'form/js/entry_form.js' ,body: true },
-      { type: 'text/javascript', src: 'form/js/entry_form_input.js' ,body: true },
+      { type: 'text/javascript', src: 'form/js/entry_form_input.js' ,body: true, defer:true },
     ]
   }
 }
-
-
 </script>

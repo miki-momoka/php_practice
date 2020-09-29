@@ -23,7 +23,7 @@ data/*
 !.gitkeep
 .idea/*
 docker/mysql/storage/*
-/www/node_modules
+node_modules/*
 /www/public/hot
 /www/public/storage
 /www/storage/*.key
