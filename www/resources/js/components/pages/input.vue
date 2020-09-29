@@ -319,6 +319,7 @@ export default {
           return true;
         }
       }
+      return false;
     },
      // name_mei
     validateNameMei: function (){
@@ -331,12 +332,14 @@ export default {
           return true;
         }
       }
+      return false;
     },
      // name_sei・name_mei (tdタグに付与する用に)
     validateName: function(){
       if(this.validateNameSei || this.validateNameMei){
         return true;
       }
+      return false;
     },
   },
   methods:{

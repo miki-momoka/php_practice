@@ -168,7 +168,7 @@ default.cssに、.v-enter-active,.v-enter等のスタイルを追加
 ### ■ computed(算出プロパティ)内で関数作成
 - 算出プロパティは、リアクティブな依存関係が更新されたときにだけ再評価される。
 - validation()内で、バリデーションを定義。
-- watchプロパティだと一つの要素しか監視できない。
+- watchプロパティだと一つの要素しか監視できないため使用していない。
 
 ### ■ エラー表示
 - 条件付きレンダリング(v-if)で validation.name を見て、data定義したerrorMsgを表示する。
@@ -178,7 +178,7 @@ default.cssに、.v-enter-active,.v-enter等のスタイルを追加
 - バリデーションでは、「''(空)」だったら未入力エラーにする。
 
 ## ⑥ 確認画面
-### ■ データ保持  親[ resources/js/components/App.vue ]　子[ resources/js/components/pages/input(confirm).vue ]
+### ■ データ保持 <br> 親[ resources/js/components/App.vue ] <br> 子[ resources/js/components/pages/input(confirm).vue ]
 - 親コンポーネント(App.vue)内　data()でform内を定義。
 - 子コンポーネント(input.vue & confirm.vue)内のpropsで値を引き継ぐ。
 - 親子間でデータを受け渡ししないといけない。formプロパティを親が更新するように下記を記述。<br>
