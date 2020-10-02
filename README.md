@@ -195,6 +195,9 @@ default.cssに、.v-enter-active,.v-enter等のスタイルを追加
 ### ■ VeeValidateを使ってみる
 https://qiita.com/youdie/items/417ed2df1bcb6a60001c
 
+フォームでコンポーネント分ける必要はない。
+同コンポーネント内で確認でOK
+
 vue-head ルート変わった際に更新されるように
 
 api使うのは、確認から完了へ行くとき
